@@ -14,12 +14,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="291dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
@@ -30,7 +30,7 @@
                     android:fontFamily="sans-serif-black"
                     android:hint="Especie: "
                     android:textColor="@color/browser_actions_bg_grey"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/browser_actions_bg_grey"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -57,7 +57,7 @@
                     android:fontFamily="sans-serif-black"
                     android:hint="Fecha y Hora: "
                     android:textColor="@color/browser_actions_bg_grey"
-                    android:textSize="14sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -66,32 +66,34 @@
                     android:layout_height="wrap_content"
                     android:text="Default"
                     android:textColor="@color/browser_actions_bg_grey"
-                    android:textSize="14sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
+
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="587dp"
+                android:layout_height="125dp"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
                     android:fontFamily="sans-serif-black"
                     android:hint="Dirección: "
                     android:textColor="@color/browser_actions_bg_grey"
-                    android:textSize="14sp"
+                    android:textSize="24sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvDireccion"
-                    android:layout_width="196dp"
-                    android:layout_height="61dp"
+                    android:layout_width="466dp"
+                    android:layout_height="match_parent"
                     android:text="Default"
                     android:textColor="@color/browser_actions_bg_grey"
-                    android:textSize="14sp"
+                    android:textSize="24sp"
                     android:textStyle="bold|italic" />
 
             </LinearLayout>
@@ -103,12 +105,12 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="55dp"
                 android:text="@string/seleccionespecie"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
 
             <LinearLayout
-                android:layout_width="409dp"
-                android:layout_height="91dp"
+                android:layout_width="630dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="25dp"
                 android:orientation="horizontal">
@@ -159,6 +161,7 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
+                    android:textSize="25dp"
                     android:id="@+id/tvSeis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -172,6 +175,7 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
+                    android:textSize="25dp"
                     android:id="@+id/tvSiete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -185,6 +189,7 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
+                    android:textSize="25dp"
                     android:id="@+id/tvOcho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -237,8 +242,8 @@
             </android.support.constraint.ConstraintLayout>
 
             <LinearLayout
-                android:layout_width="412dp"
-                android:layout_height="89dp"
+                android:layout_width="630dp"
+                android:layout_height="200dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:orientation="horizontal">
@@ -274,7 +279,6 @@
                 app:layout_constraintStart_toStartOf="@+id/tvDos">
 
 
-
                 <android.support.constraint.Guideline
                     android:id="@+id/guideline10"
                     android:layout_width="wrap_content"
@@ -304,6 +308,7 @@
                     app:layout_constraintGuide_begin="334dp" />
 
                 <TextView
+                    android:textSize="25dp"
                     android:id="@+id/tvDos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -318,6 +323,7 @@
                     app:layout_constraintVertical_bias="0.571" />
 
                 <TextView
+                    android:textSize="25dp"
                     android:id="@+id/tvTres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -333,6 +339,7 @@
                     app:layout_constraintVertical_bias="0.571" />
 
                 <TextView
+                    android:textSize="25dp"
                     android:id="@+id/tvCuatro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -351,7 +358,7 @@
             <ImageButton
                 android:layout_width="116dp"
                 android:layout_height="111dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="40dp"
                 android:background="@mipmap/arrow"
                 android:onClick="btn_Regresar" />
 

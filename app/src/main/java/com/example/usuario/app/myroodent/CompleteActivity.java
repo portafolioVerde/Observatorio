@@ -78,6 +78,7 @@ ImageView btnSeis;
 ImageView btnSiete;
 @BindView(R.id.btnOcho)
 ImageView btnOcho;
+
 @BindView(R.id.tvOcho)
 TextView tvOcho;
 @BindView(R.id.tvSiete)

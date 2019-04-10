@@ -87,8 +87,8 @@
 
                 <TextView
                     android:id="@+id/tvDireccion"
-                    android:layout_width="196dp"
-                    android:layout_height="61dp"
+                    android:layout_width="235dp"
+                    android:layout_height="77dp"
                     android:text="Default"
                     android:textColor="@color/browser_actions_bg_grey"
                     android:textSize="14sp"
