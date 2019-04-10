@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "54295220565",
+    "firebase_url": "https://my-roodent.firebaseio.com",
+    "project_id": "my-roodent",
+    "storage_bucket": "my-roodent.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54295220565:android:1f9a34281b246b1e",
+        "android_client_info": {
+          "package_name": "com.example.usuario.app.myroodent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54295220565-mm0hi2v6tb6rnonp24imoo5c75tis34r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.usuario.app.myroodent",
+            "certificate_hash": "5f69db3753a59932006cde0f1e2154c9c004b657"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbIYEOH0LwmVW7a_y6JqW16OOeY_tE9ZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "54295220565-ae26dcg3sqklujivmg68a3dm4cql2i8p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

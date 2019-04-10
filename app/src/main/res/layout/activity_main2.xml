@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo1naranjaabajo"
+    android:orientation="vertical"
+    style="@style/TemaLayout"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    >
+    <ScrollView
+        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/TemaLayout">
+        <LinearLayout
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".Main2Activity"
+            style="@style/TemaLayout">
+
+            <Button
+                android:id="@+id/btnAlerta"
+                android:layout_width="165dp"
+                android:layout_height="165dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="165dp"
+                android:background="@drawable/botonmuertohover"
+                android:gravity="center_horizontal" />
+
+            <TextView
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="¡Reportar!"
+        android:textSize="25dp" />
+
+            <ImageButton
+                android:id="@+id/btnVolver"
+                android:layout_width="109dp"
+                android:layout_height="91dp"
+                android:layout_gravity="left"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="110dp"
+                android:background="@mipmap/arrow"
+                android:textColorLink="@color/fui_transparent" />
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
