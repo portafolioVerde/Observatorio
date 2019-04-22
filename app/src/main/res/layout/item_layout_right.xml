@@ -34,30 +34,32 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Especie: "
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="15sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/fondoReporte"
             app:layout_constraintEnd_toStartOf="@+id/txtTitulo"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="82dp"
-            android:layout_marginRight="82dp"
-            android:paddingLeft="70dp"
             android:text="Ave "
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="15sp"
             app:layout_constraintBottom_toTopOf="@+id/fondoReporte"
-            app:layout_constraintEnd_toStartOf="@+id/imgPhoto"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/textView5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
 
         <TextView
@@ -80,7 +82,7 @@
             android:layout_height="20dp"
             android:layout_marginStart="56dp"
             android:layout_marginLeft="56dp"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="27dp"
             android:lineSpacingExtra="-4dp"
             android:text="Av Siempre Viva"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -107,9 +109,9 @@
 
         <TextView
             android:id="@+id/txtDetalle2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
+            android:layout_width="154dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="25dp"
             android:text="Viernes 01 Marzo "
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"

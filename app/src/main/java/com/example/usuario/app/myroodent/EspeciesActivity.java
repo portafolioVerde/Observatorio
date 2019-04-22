@@ -10,6 +10,7 @@ import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.Empty;
 
@@ -20,7 +21,7 @@ public class EspeciesActivity extends RegistrosActivity {
 
     private static final String TAG = "FireLog";
     private RecyclerView mMainList;
-    private FirebaseFirestore mFirestore;
+    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     public AvistAdapter avistAdapter;
     public List<ReporteEspecie> reporteEspecies;
 
@@ -28,6 +29,11 @@ public class EspeciesActivity extends RegistrosActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_especies);
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        mFirestore.setFirestoreSettings(settings);
 
         reporteEspecies = new ArrayList<>();
         avistAdapter = new AvistAdapter(reporteEspecies);
@@ -43,6 +49,7 @@ public class EspeciesActivity extends RegistrosActivity {
         mFirestore.collection("Data")
                 .document(mFirebaseAuth.getCurrentUser().getDisplayName())
                 .collection("Reportes")
+                //.orderBy("id")
                 .whereEqualTo("subEspecie","" )
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -55,23 +62,18 @@ public class EspeciesActivity extends RegistrosActivity {
 
                             if(doc.getType()== DocumentChange.Type.ADDED){
 
-
                                 final ReporteEspecie reporteEspecie = doc.getDocument().toObject(ReporteEspecie.class);
-
                                 reporteEspecies.add(reporteEspecie);
-
                                 avistAdapter.notifyDataSetChanged();
-
                             }
                         }
-
                    }
         });
     }
-
     public void ir_menu(View view) {
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }
 

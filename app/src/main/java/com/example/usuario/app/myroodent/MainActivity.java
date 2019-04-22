@@ -36,6 +36,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     TextView tvEmail;
     @BindView(R.id.tvProvider)
     TextView tvProvider;
-
+    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     ImageButton continuar, regresar;
 
     private FirebaseAuth mFirebaseAuth;
@@ -80,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        mFirestore.setFirestoreSettings(settings);
 
         continuar = findViewById(R.id.btnSi);
         regresar = findViewById(R.id.btnNo);
@@ -258,8 +265,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void siContinuar(View view) {
         Intent i = new Intent(MainActivity.this, Main2Activity.class);
-        //i.putExtra("userName", mFirebaseAuth.getCurrentUser().getDisplayName());
         startActivity(i);
+        finish();
     }
 
 
@@ -268,4 +275,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(o);
     }
 
+    public void ir_mapa(View view) {
+        Intent o = new Intent(this,MapsActivity.class);
+        startActivity(o);
+    }
 }

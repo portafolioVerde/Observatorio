@@ -55,16 +55,27 @@
                     android:layout_width="300dp"
                     android:layout_height="300dp"
                     android:background="@drawable/anfibioinactivo"
-                    android:onClick="onAnfibio" />
+                    android:onClick="onAnfibio"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnAve"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/btnAve"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
+                    android:layout_marginStart="107dp"
+                    android:layout_marginLeft="107dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="2dp"
                     android:background="@drawable/aveinactivo"
                     android:onClick="onAve"
-                    tools:layout_editor_absoluteX="407dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btnAnfibio"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -152,10 +163,17 @@
                     android:id="@+id/btnDesc"
                     android:layout_width="290dp"
                     android:layout_height="290dp"
+                    android:layout_marginStart="97dp"
+                    android:layout_marginLeft="97dp"
+                    android:layout_marginEnd="49dp"
+                    android:layout_marginRight="49dp"
+                    android:layout_marginBottom="14dp"
                     android:background="@drawable/animaldesconocidoinactivo"
                     android:onClick="onDesc"
-                    tools:layout_editor_absoluteX="413dp"
-                    tools:layout_editor_absoluteY="0dp" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btnReptil"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 

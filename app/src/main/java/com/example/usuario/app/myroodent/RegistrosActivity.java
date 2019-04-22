@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.LocaleList;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -121,26 +122,32 @@ public class RegistrosActivity extends AppCompatActivity {
     ImageView btnDesc;
     @BindView(R.id.txtDireccion)
     TextView tDireccion;
+    @BindView(R.id.txtLat)
+    TextView tLat;
+    @BindView(R.id.txtLng)
+    TextView tLng;
+
+    TextView txtLat,txtLng;
+
     private List<ReporteEspecie> reporteEspecie;
+
     LocationManager locationManager;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     AlertDialog alert = null;
 
-    public static final String PREFERENCIAS = "MyPrefs" ;
+    public static final String PREFERENCIAS = "MyPrefs";
+    private SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registros);
 
-        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
-        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            AlertNoGps();
-        }
 
-        getDatos(Locale.getDefault());
 
-        ActivityCompat.requestPermissions(RegistrosActivity.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
+        //getDatos(Locale.getDefault());
+        checkIfLocationOpened();
+
         ////////////////Persistencia sin conexion FireStore///////////////////////////
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
@@ -156,53 +163,68 @@ public class RegistrosActivity extends AppCompatActivity {
         registrarLocalizacion();
         localizacion();
 
+        detectarConx();
     }//FinOnCreate
 
-    private void getDatos(Locale locale) {
-        Calendar today = Calendar.getInstance(locale);
-        Log.d("Resultado","Year : " + today.get(Calendar.YEAR));
-        Log.d("Resultado","Month (0 is January): " + today.get(Calendar.MONTH));
-        Log.d("Resultado","Month (String): "
-                + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
-                locale));
-        Log.d("Resultado","Day of Month : " + today.get(Calendar.DAY_OF_MONTH));
-        Log.d("Resultado","Day of Week (0 is Sunday): "
-                + today.get(Calendar.DAY_OF_WEEK));
-        Log.d("Resultado","Day of Week (String): "
-                + today.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG,
-                locale));
-        Log.d("Resultado","Week of Year : "+today.get(Calendar.WEEK_OF_YEAR));
-        Log.d("Resultado","Week of Month : "+today.get(Calendar.WEEK_OF_MONTH));
-        Log.d("Resultado","Day of Year : " + today.get(Calendar.DAY_OF_YEAR));
-        Log.d("Resultado","24-hour clock : " + today.get(Calendar.HOUR_OF_DAY));
-        Log.d("Resultado","12-hour clock : " + today.get(Calendar.HOUR));
-        Log.d("Resultado","AM/PM : " + today.get(Calendar.AM_PM));
-        Log.d("Resultado","AM/PM : "
-                + today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
-                locale));
-        Log.d("Resultado","Minutes : " + today.get(Calendar.MINUTE));
-        Log.d("Resultado","Seconds : " + today.get(Calendar.SECOND));
-        Log.d("Resultado","MiliSeconds : " + today.get(Calendar.MILLISECOND));
+    private void detectarConx() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        boolean hayConexion = networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
+
+        if (hayConexion) {
+
+        } else {
+            SharedPreferences prefs = getSharedPreferences((getString(R.string.preference_file_key)),MODE_PRIVATE);
+            String direc = prefs.getString((getString(R.string.direccion_key)),"");
+            tDireccion.setText(direc);
+        }
+
     }
 
-    //Detecta el proveedor de GPS
-    private boolean isLocationEnabled() {
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    private boolean checkIfLocationOpened() {
+        String provider = Settings.Secure.getString(getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        System.out.println("Provider contains=> " + provider);
+        if (provider.contains("gps") || provider.contains("network")){
+            //Toast.makeText(getApplicationContext(), "Ya se encuentra activo el GPS", Toast.LENGTH_SHORT).show();
+        }else{
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("El GPS se encuentra apagado, ¿Desea activarlo?")
+                    .setCancelable(false)
+                    .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                        public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int which) {
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                            dialog.cancel();
+                        }
+                    });
+            alert = builder.create();
+            alert.show();
+        }
+        return false;
+
     }
-    public void ConvertidordeCoordenadas(){
+
+    public void AlertNoGps() {
+
+    }
+
+    public void ConvertidordeCoordenadas() {
 
         GPStracker g = new GPStracker(getApplicationContext());
 
 
         Location l = g.getLocation();
-        if (l!=null){
+        if (l != null) {
             double lat = l.getLatitude();
             double lon = l.getLongitude();
 
             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             try {
-                List<Address> direccion = geocoder.getFromLocation(l.getLatitude(),l.getLongitude(),1);
+                List<Address> direccion = geocoder.getFromLocation(l.getLatitude(), l.getLongitude(), 1);
                 //System.out.println(direccion.get(0).getAddressLine(0));
 
                 //tDireccion.setText(direccion.get(0).getAddressLine(0));
@@ -211,45 +233,33 @@ public class RegistrosActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        }else{
-            Toast.makeText(getApplicationContext(),"Sin GPS",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Sin GPS", Toast.LENGTH_SHORT).show();
         }
 
     }
+
     //Metodo para detectar id par o impar
-    public void ParoImpar(){
-        if(count.get()%2==0){
+    public void ParoImpar() {
+        if (count.get() % 2 == 0) {
             //Log.d("ParoImpar","= Par");
-        }else{
+        } else {
             //Log.d("ParoImpar","= Impar");
         }
 
     }
+
     //Metodo para detectar gps activo
-    public void AlertNoGps(){
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("El GPS se encuentra apagado, ¿Desea activarlo?")
-                .setCancelable(false)
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog,@SuppressWarnings("unused")final int which) {
-                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog,@SuppressWarnings("unused") final int id) {
-                        dialog.cancel();
-                    }
-                });
-        alert = builder.create();
-        alert.show();
-    }
+
+
     //Metodo que obtiene fecha y hora
-    public void times(View v){
+    public void times(View v) {
 
     }
+
     //Metodo Anfibio
     public void onAnfibio(View view) {
-        Locale locale= Locale.getDefault();
+        Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
 
         Map<String, Object> r = new HashMap<>();
@@ -257,13 +267,14 @@ public class RegistrosActivity extends AppCompatActivity {
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
+        r.put("lat",  tLat.getText());
+        r.put("lng",  tLng.getText());
         r.put("especie", "Anfibio");
         r.put("subEspecie", "");
-        r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH)+" de "+ today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
-                locale)+" de "+today.get(Calendar.YEAR)+" a las "+today.get(Calendar.HOUR)+":"+today.get(Calendar.MINUTE)+" "+today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
+        r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                locale) + " de " + today.get(Calendar.YEAR) + " a las " + today.get(Calendar.HOUR) + ":" + today.get(Calendar.MINUTE) + " " + today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
                 locale));
-        //r.put("fechaYhora",Calendar.getInstance().getTime() );
-        // Add a new document with a generated ID
+
         db.collection("Data")
                 .document(mFirebaseAuth.getCurrentUser()
                         .getDisplayName())
@@ -272,6 +283,7 @@ public class RegistrosActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+
                         String docRef = documentReference.getId();//Envio del id del documento creado
                         Map<String, Object> e = new HashMap<>();
                         e.put("doc", docRef);
@@ -295,7 +307,6 @@ public class RegistrosActivity extends AppCompatActivity {
                 });
 
 
-
         //notificacion push//////////////////////////////////////////////////////////////////////////////////////////////////////
         Intent intent = new Intent(this, EspeciesActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -309,7 +320,7 @@ public class RegistrosActivity extends AppCompatActivity {
         Notification.Builder notificationBuilder = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("Ingresa a MyRoodent")
-                .setContentText("Tienes " +count.toString()+" reportes por completar!! ")
+                .setContentText("Tienes reportes por completar!! ")
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
@@ -330,27 +341,28 @@ public class RegistrosActivity extends AppCompatActivity {
             notificationManager.notify("", 0, notificationBuilder.build());
 
         }
-        //Mensaje de reporte////////////////////////////////////////////////////////////////////////////////////////////////
+        btnAnfibio.setBackgroundResource(R.drawable.anfibioactivo);//Cambio de boton
 
-        //cambio de boton//////////////////////////////////////////////////////////////////////////////////////////////////////
-        btnAnfibio.setBackgroundResource(R.drawable.anfibioactivo);
-
-        Intent i = new Intent(this,Main2Activity.class);
+        Intent i = new Intent(this, Main2Activity.class);
+        i.putExtra("ultimaDireccion",tDireccion.getText());
         startActivity(i);
     }
+
     //Metodo Mamifero
     public void onMamifero(View view) {
-        Locale locale= Locale.getDefault();
+        Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
+        r.put("lat",  tLat.getText());
+        r.put("lng",  tLng.getText());
         r.put("especie", "Mamifero");
         r.put("subEspecie", "");
-        r.put("fechaYhora",today.get(Calendar.DAY_OF_MONTH)+" de "+ today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
-                locale)+" de "+today.get(Calendar.YEAR)+" a las "+today.get(Calendar.HOUR)+":"+today.get(Calendar.MINUTE)+" "+today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
+        r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                locale) + " de " + today.get(Calendar.YEAR) + " a las " + today.get(Calendar.HOUR) + ":" + today.get(Calendar.MINUTE) + " " + today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
                 locale));
         // Add a new document with a generated ID
         db.collection("Data")
@@ -394,7 +406,7 @@ public class RegistrosActivity extends AppCompatActivity {
         Notification.Builder notificationBuilder = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("Ingresa a MyRoodent")
-                .setContentText("Tienes " +count.toString()+" reportes por completar!! ")
+                .setContentText("Tienes reportes por completar!! ")
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
@@ -417,24 +429,27 @@ public class RegistrosActivity extends AppCompatActivity {
         }
         btnMamifero.setBackgroundResource(R.drawable.mamiferoactivo);
         Toast.makeText(this, "Se agregó la direccion donde acabas de ver un Mamífero", Toast.LENGTH_LONG).show();
-        Intent i = new Intent(this,Main2Activity.class);
+        Intent i = new Intent(this, Main2Activity.class);
         startActivity(i);
 
 
     }
+
     //Metodo Ave
     public void onAve(View view) {
-        Locale locale= Locale.getDefault();
+        Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
+        r.put("lat",  tLat.getText());
+        r.put("lng",  tLng.getText());
         r.put("especie", "Ave");
         r.put("subEspecie", "");
-        r.put("fechaYhora",today.get(Calendar.DAY_OF_MONTH)+" de "+ today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
-                locale)+" de "+today.get(Calendar.YEAR)+" a las "+today.get(Calendar.HOUR)+":"+today.get(Calendar.MINUTE)+" "+today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
+        r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                locale) + " de " + today.get(Calendar.YEAR) + " a las " + today.get(Calendar.HOUR) + ":" + today.get(Calendar.MINUTE) + " " + today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
                 locale));
 
         // Add a new document with a generated ID
@@ -478,7 +493,7 @@ public class RegistrosActivity extends AppCompatActivity {
         Notification.Builder notificationBuilder = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("Ingresa a MyRoodent")
-                .setContentText("Tienes " +count.toString()+" reportes por completar!!")
+                .setContentText("Tienes reportes por completar!!")
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
@@ -501,24 +516,27 @@ public class RegistrosActivity extends AppCompatActivity {
         }
         btnAve.setBackgroundResource(R.drawable.aveactiva);
         Toast.makeText(this, "Se agregó la direccion donde acabas de ver un Ave", Toast.LENGTH_LONG).show();
-        Intent i = new Intent(this,Main2Activity.class);
+        Intent i = new Intent(this, Main2Activity.class);
         startActivity(i);
 
 
     }
+
     //Metodo Reptil
     public void onReptil(View view) {
-        Locale locale= Locale.getDefault();
+        Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
+        r.put("lat",  tLat.getText());
+        r.put("lng",  tLng.getText());
         r.put("especie", "Reptil");
         r.put("subEspecie", "");
-        r.put("fechaYhora",today.get(Calendar.DAY_OF_MONTH)+" de "+ today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
-                locale)+" de "+today.get(Calendar.YEAR)+" a las "+today.get(Calendar.HOUR)+":"+today.get(Calendar.MINUTE)+" "+today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
+        r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                locale) + " de " + today.get(Calendar.YEAR) + " a las " + today.get(Calendar.HOUR) + ":" + today.get(Calendar.MINUTE) + " " + today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
                 locale));
 
         // Add a new document with a generated ID
@@ -563,7 +581,7 @@ public class RegistrosActivity extends AppCompatActivity {
         Notification.Builder notificationBuilder = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("Ingresa a MyRoodent")
-                .setContentText("Tienes " +count.toString()+" reportes por completar!! ")
+                .setContentText("Tienes reportes por completar!! ")
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
@@ -586,23 +604,26 @@ public class RegistrosActivity extends AppCompatActivity {
         }
         btnReptil.setBackgroundResource(R.drawable.reptilactivo);
         Toast.makeText(this, "Se agregó la direccion donde acabas de ver un Reptil", Toast.LENGTH_LONG).show();
-        Intent i = new Intent(this,Main2Activity.class);
+        Intent i = new Intent(this, Main2Activity.class);
         startActivity(i);
 
 
     }
+
     //Metodo Especie Desconocida
     public void onDesc(View view) {
-        Locale locale= Locale.getDefault();
+        Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
+        r.put("lat",  tLat.getText());
+        r.put("lng",  tLng.getText());
         r.put("especie", "Desconocida");
-        r.put("fechaYhora",today.get(Calendar.DAY_OF_MONTH)+" de "+ today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
-                locale)+" de "+today.get(Calendar.YEAR)+" a las "+today.get(Calendar.HOUR)+":"+today.get(Calendar.MINUTE)+" "+today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
+        r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                locale) + " de " + today.get(Calendar.YEAR) + " a las " + today.get(Calendar.HOUR) + ":" + today.get(Calendar.MINUTE) + " " + today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
                 locale));
 
 
@@ -642,7 +663,7 @@ public class RegistrosActivity extends AppCompatActivity {
         Notification.Builder notificationBuilder = new Notification.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setContentTitle("Ingresa a MyRoodent")
-                .setContentText("Tienes " +count.toString()+" reportes por completar!! ")
+                .setContentText("Tienes reportes por completar!! ")
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
@@ -665,33 +686,36 @@ public class RegistrosActivity extends AppCompatActivity {
         }
         btnDesc.setBackgroundResource(R.drawable.animaldesconocidoactivo);
         Toast.makeText(this, "Se agregó la direccion donde acabas de ver una especie Desconocida", Toast.LENGTH_LONG).show();
-        Intent i = new Intent(this,Main2Activity.class);
+        Intent i = new Intent(this, Main2Activity.class);
         startActivity(i);
 
 
     }
+
     //Metodo que obtiene ubicacion
     private void localizacion() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
-            }, 1000);
+            }, 1);
         }
         ubicacion = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Location loc = ubicacion.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
     }
+
     //Metodo que actualiza ubicacion en tiempo real
     private void registrarLocalizacion() {
         ubicacion = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        ubicacion.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, new milocalizacionListener());
+        ubicacion.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 0, new milocalizacionListener());
     }
+
     //Metodo para volver a la actividad anterior
     public void devolverMenu(View view) {
-        Intent i = new Intent(this,Main2Activity.class);
+        Intent i = new Intent(this, Main2Activity.class);
         startActivity(i);
     }
 
@@ -703,10 +727,24 @@ public class RegistrosActivity extends AppCompatActivity {
             //System.out.println("La direccion ha cambiado");
             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             try {
-                List<Address> direccion = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
-                //System.out.println(direccion.get(0).getAddressLine(0));
+                List<Address> direccion = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+
+                Double lat = direccion.get(0).getLatitude();
+                Double lng = direccion.get(0).getLongitude();
+                String latS = String.valueOf(lat);
+                String lngS = String.valueOf(lng);
 
                 tDireccion.setText(direccion.get(0).getAddressLine(0));
+
+                tLat.setText(latS);
+                tLng.setText(lngS);
+
+                Context context = getApplicationContext();
+
+                sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString(getString(R.string.direccion_key), direccion.get(0).getAddressLine(0));
+                editor.apply();
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -727,8 +765,7 @@ public class RegistrosActivity extends AppCompatActivity {
 
         @Override
         public void onProviderDisabled(String provider) {
-
-
         }
     }
 }
+

@@ -12,9 +12,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="232dp"
+        android:layout_height="233dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="65dp"
         app:srcCompat="@drawable/iconoplaystore" />
 </LinearLayout>

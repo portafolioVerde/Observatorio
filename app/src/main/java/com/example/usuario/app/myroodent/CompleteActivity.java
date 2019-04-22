@@ -1,20 +1,9 @@
 package com.example.usuario.app.myroodent;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,25 +11,17 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.example.usuario.app.myroodent.RegistrosActivity.PREFERENCIAS;
 
 public class CompleteActivity extends AppCompatActivity {
 
@@ -94,7 +75,6 @@ TextView tvTres;
 @BindView(R.id.tvDos)
 TextView tvDos;
 
-
 public List<ReporteEspecie> reportesEspecies;
 
 @Override
@@ -102,6 +82,11 @@ protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_complete);
+
+    FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(true)
+            .build();
+    mFirestore.setFirestoreSettings(settings);
 
     mFirebaseAuth = FirebaseAuth.getInstance();
     mFirestore = FirebaseFirestore.getInstance();
@@ -113,6 +98,7 @@ protected void onCreate(Bundle savedInstanceState) {
     }
 
     public void traerDoc(){
+
     String doc = getIntent().getStringExtra("doc");
 
     mFirestore.collection("Data")
@@ -213,9 +199,9 @@ protected void onCreate(Bundle savedInstanceState) {
                                                 startActivity(intent);
                                             }
                                         });
-                                        btnOcho.setImageResource(R.drawable.culebra);
-                                        tvOcho.setText("Culebra");
-                                        btnOcho.setOnClickListener(new View.OnClickListener() {
+                                        btnSiete.setImageResource(R.drawable.culebra);
+                                        tvSiete.setText("Culebra");
+                                        btnSiete.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
@@ -228,9 +214,9 @@ protected void onCreate(Bundle savedInstanceState) {
                                                 startActivity(intent);
                                             }
                                         });
-                                        btnTres.setImageResource(R.drawable.reptilactivo);
-                                        tvTres.setText("Tortuga");
-                                        btnTres.setOnClickListener(new View.OnClickListener() {
+                                        btnOcho.setImageResource(R.drawable.reptilactivo);
+                                        tvOcho.setText("Tortuga");
+                                        btnOcho.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
                                                 Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
@@ -352,24 +338,6 @@ protected void onCreate(Bundle savedInstanceState) {
                                                 }
                                             });
 
-                                        }else{
-                                            if(tvEspecie.getText().equals(OTRO)){
-
-                                                tvMensaje.setText("No existen subEspecies para esta categoria presiona atras para continuar");
-                                                //Toast.makeText(getApplicationContext(), "No existen subEspecies para esta categoria", Toast.LENGTH_LONG).show();
-                                                btnSeis.setImageResource(R.drawable.botonatrashover);
-                                                btnSeis.setOnClickListener(new View.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(View v) {
-                                                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                                                        startActivity(intent);
-                                                    }
-                                                });
-
-                                            }else{
-                                                Toast.makeText(getApplicationContext(), "ERROR", Toast.LENGTH_LONG).show();
-
-                                            }
                                         }
                                     }
                                 }
@@ -383,8 +351,6 @@ protected void onCreate(Bundle savedInstanceState) {
     }
 
     public void btn_Regresar(View view) {
-
         onBackPressed();
-
     }
 }

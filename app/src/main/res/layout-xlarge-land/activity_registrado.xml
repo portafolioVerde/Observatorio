@@ -17,7 +17,7 @@
         android:gravity="center"
         android:text="@string/especieregistrada"
         android:textColor="@color/browser_actions_bg_grey"
-        android:textSize="20sp" />
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/tvNombre"
@@ -28,22 +28,23 @@
         android:gravity="center"
         android:text="Usuario"
         android:textColor="@color/browser_actions_bg_grey"
-        android:textSize="20sp" />
+        android:textSize="36sp" />
 
     <TextView
+        android:layout_width="881dp"
+        android:layout_height="57dp"
         android:layout_gravity="center_horizontal"
-        android:layout_width="238dp"
-        android:layout_height="68dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="40dp"
         android:fontFamily="sans-serif-medium"
         android:gravity="center_horizontal"
         android:text="@string/registrocompleto"
-        android:textSize="16sp" />
+        android:textSize="30sp" />
 
     <LinearLayout
-        android:layout_width="333dp"
+        android:layout_width="1000dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
@@ -52,21 +53,23 @@
             android:layout_height="match_parent"
             android:fontFamily="sans-serif-medium"
             android:text="Especie: "
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvEspecieRegistrada"
-            android:layout_width="233dp"
+            android:layout_width="774dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="28dp"
             android:background="@drawable/borderedondo"
             android:fontFamily="sans-serif-medium"
-            android:text="Ave" />
+            android:text="Ave"
+            android:textSize="30sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="365dp"
+        android:layout_width="1000dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="6dp"
@@ -78,21 +81,23 @@
             android:layout_height="match_parent"
             android:fontFamily="sans-serif-medium"
             android:text="SubEspecie: "
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvSubEspecieRegistrada"
-            android:layout_width="232dp"
+            android:layout_width="741dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="6dp"
             android:background="@drawable/borderedondo"
             android:fontFamily="sans-serif-medium"
-            android:text="Rapaces" />
+            android:text="Rapaces"
+            android:textSize="30sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="381dp"
+        android:layout_width="1000dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="6dp"
@@ -105,21 +110,23 @@
             android:layout_marginRight="18dp"
             android:fontFamily="sans-serif-medium"
             android:text="FechayHora: "
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvFechayHora"
-            android:layout_width="230dp"
+            android:layout_width="740dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="-12dp"
             android:background="@drawable/borderedondo"
             android:fontFamily="sans-serif-medium"
-            android:text="12 de Marzo de 2019, 16:36:38" />
+            android:text="12 de Marzo de 2019, 16:36:38"
+            android:textSize="30sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="379dp"
+        android:layout_width="1000dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="6dp"
@@ -133,23 +140,25 @@
             android:layout_marginRight="4dp"
             android:fontFamily="sans-serif-medium"
             android:text="Dirección: "
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tvDireccionRegistrada"
-            android:layout_width="233dp"
+            android:layout_width="756dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="18dp"
             android:background="@drawable/borderedondo"
             android:fontFamily="sans-serif-medium"
-            android:text="Catedral Metropolitana" />
+            android:text="Catedral Metropolitana"
+            android:textSize="30sp" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/regresardRegistros"
-        android:layout_width="238dp"
-        android:layout_height="33dp"
+        android:layout_width="500dp"
+        android:layout_height="55dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="65dp"
         android:background="@drawable/borderedondo2"
@@ -157,6 +166,22 @@
         android:gravity="center_horizontal"
         android:text="@string/regresarregistros"
         android:textColor="@color/com_facebook_button_background_color_focused"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <Button
+
+        android:id="@+id/regresar_Menu"
+        android:layout_width="500dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/borderedondo2"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_horizontal"
+        android:text="@string/regresarmenu_1"
+        android:textColor="@color/com_facebook_button_background_color_focused"
+        android:textSize="30sp"
         android:textStyle="bold" />
 
 

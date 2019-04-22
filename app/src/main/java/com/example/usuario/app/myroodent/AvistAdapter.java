@@ -1,22 +1,16 @@
 package com.example.usuario.app.myroodent;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
-import static android.app.PendingIntent.getActivity;
-import static android.support.v4.content.ContextCompat.startActivity;
-import static com.facebook.FacebookSdk.getApplicationContext;
-
 public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
 
-    private Context contexto;
     private int LEFT_CELL = 1;
     private int RIGHT_CELL = 0;
     private List<ReporteEspecie> reporteEspecie;
@@ -74,8 +68,25 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
 
         holder.TxtTitulo.setText(reporteEspecie.get(position).getEspecie());
         holder.TxtDetalle.setText(reporteEspecie.get(position).getDireccion());
-        holder.TxtDetalle2.setText(reporteEspecie.get(position).getFechaYhora().toString());
-        //holder.ImgPhoto.setImageResource(reporteEspecie.get(position).getImage());
+        holder.TxtDetalle2.setText(reporteEspecie.get(position).getFechaYhora());
+
+        if(holder.TxtTitulo.getText().equals("Mamifero")){
+            holder.ImgPhoto.setImageResource(R.drawable.mamiferoactivo);
+        }else{
+            if(holder.TxtTitulo.getText().equals("Ave")){
+                holder.ImgPhoto.setImageResource(R.drawable.aveactiva);
+            }else{
+                if(holder.TxtTitulo.getText().equals("Anfibio")){
+                    holder.ImgPhoto.setImageResource(R.drawable.anfibioactivo);
+                }else{
+                    if (holder.TxtTitulo.getText().equals("Reptil")){
+                        holder.ImgPhoto.setImageResource(R.drawable.reptilactivo);
+                    }
+                }
+            }
+
+        }
+
 
     }
 
@@ -91,7 +102,7 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
         public TextView TxtTitulo;
         public TextView TxtDetalle;
         public TextView TxtDetalle2;
-        //public ImageView ImgPhoto;
+        public ImageView ImgPhoto;
 
         public ViewHolder(View itemView) {
 
@@ -102,12 +113,11 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
             TxtTitulo = (TextView) mView.findViewById(R.id.txtTitulo);
             TxtDetalle = (TextView) mView.findViewById(R.id.txtDetalle);
             TxtDetalle2 = (TextView) mView.findViewById(R.id.txtDetalle2);
-            //ImgPhoto = (ImageView) mView.findViewById(R.id.imgPhoto);
+            ImgPhoto = (ImageView) mView.findViewById(R.id.imgPhoto);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //Log.d("Mensaje",reporteEspecie.get(getAdapterPosition()).getDoc());
 
                     Intent intent = new Intent(mView.getContext(), CompleteActivity.class);
                     intent.putExtra("doc", reporteEspecie.get(getAdapterPosition()).getDoc());

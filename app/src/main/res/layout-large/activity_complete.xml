@@ -87,7 +87,7 @@
 
                 <TextView
                     android:id="@+id/tvDireccion"
-                    android:layout_width="196dp"
+                    android:layout_width="255dp"
                     android:layout_height="61dp"
                     android:text="Default"
                     android:textColor="@color/browser_actions_bg_grey"
@@ -142,9 +142,13 @@
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/linearLayout2"
-                android:layout_width="match_parent"
+
+                android:layout_width="445dp"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal">
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                tools:layout_editor_absoluteX="27dp"
+                tools:layout_editor_absoluteY="318dp">
 
                 <TextView
                     android:id="@+id/tvCinco"
@@ -266,13 +270,13 @@
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/linearLayout3"
-                android:layout_width="match_parent"
-                android:layout_height="26dp"
+                android:layout_width="412dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toStartOf="@+id/tvDos"
-                app:layout_constraintStart_toStartOf="@+id/tvDos">
-
+                tools:layout_editor_absoluteY="455dp">
 
 
                 <android.support.constraint.Guideline

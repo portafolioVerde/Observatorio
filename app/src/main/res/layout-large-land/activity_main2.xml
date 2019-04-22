@@ -48,7 +48,7 @@
                 android:layout_height="91dp"
                 android:layout_gravity="left"
                 android:layout_marginLeft="28dp"
-                android:layout_marginTop="85dp"
+                android:layout_marginTop="15dp"
                 android:background="@mipmap/arrow"
                 android:textColorLink="@color/fui_transparent" />
         </LinearLayout>

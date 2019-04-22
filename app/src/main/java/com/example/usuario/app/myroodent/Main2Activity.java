@@ -1,31 +1,28 @@
 package com.example.usuario.app.myroodent;
-
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.Locale;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 public class Main2Activity extends AppCompatActivity {
 
     Button btnAlerta;
     ImageButton btnVolver;
-    private FirebaseAuth mFirebaseAuth;
-    private FirebaseAuth.AuthStateListener mAuthStateListener;
-
+    FirebaseAuth mFirebaseAuth;
+    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        mFirestore.setFirestoreSettings(settings);
 
         btnVolver = findViewById(R.id.btnVolver);
         btnAlerta = findViewById(R.id.btnAlerta);

@@ -22,5 +22,8 @@
     <string name="regresarregistros">Regresar a tus registros</string>
     <string name="completarregistrostring">Completar Registro</string>
     <string name="regresarmenu_1">Regresar al Menú</string>
+    <string name="preference_file_key">fichero01</string>
+    <string name="direccion_key">ubicacion_01</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

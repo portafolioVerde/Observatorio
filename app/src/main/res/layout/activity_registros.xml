@@ -35,6 +35,7 @@
             <TextView
                 android:id="@+id/txtDireccion"
                 style="@style/TextViewBase"
+                android:layout_width="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:hint="Obteniendo direccion precisa..."
@@ -143,6 +144,8 @@
                     android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
+
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -154,6 +157,20 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/txtLng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@android:color/transparent" />
+
+            <TextView
+                android:id="@+id/txtLat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@android:color/transparent" />
+
             <ImageButton
                 android:id="@+id/btnVolver"
                 android:layout_width="51dp"
@@ -161,6 +178,7 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/botonatras"
                 android:onClick="devolverMenu" />
+
 
         </LinearLayout>
     </ScrollView>

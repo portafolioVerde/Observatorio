@@ -9,16 +9,15 @@ import static java.text.DateFormat.getDateInstance;
 public class ReporteEspecie {
 
     String email,direccion,especie,nombre,doc;
-    //Integer id;
     Long id;
-    /*int image;*/
+    int img;
     String fechaYhora;
 
     public ReporteEspecie(){
 
     }
 
-    public ReporteEspecie(/*int image,*/String doc,Long id, String email, String direccion, String especie, String nombre, String fechaYhora) {
+    public ReporteEspecie(int img,String doc,Long id, String email, String direccion, String especie, String nombre, String fechaYhora) {
         this.doc = doc;
         this.id = id;
         this.email = email;
@@ -26,7 +25,7 @@ public class ReporteEspecie {
         this.especie = especie;
         this.nombre = nombre;
         this.fechaYhora = fechaYhora;
-        //this.image = image;
+        this.img = img;
     }
     public String getDoc(){
         return doc;
@@ -87,15 +86,17 @@ public class ReporteEspecie {
     }
 
 
-
-
-
-    /*public int getImage(){
-        return  getImage();
+    public int getImg(){
+        return  getImg();
     }
-    public void setImage(int image){
-        this.image = image;
-    }*/
+    public void setImg(int img){
+        this.img = img;
+    }
+
+    @Override
+    public String toString(){
+        return direccion;
+    }
 
 
 

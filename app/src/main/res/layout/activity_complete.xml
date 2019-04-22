@@ -101,16 +101,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="35dp"
                 android:text="@string/seleccionespecie"
                 android:textSize="24sp" />
-
 
             <LinearLayout
                 android:layout_width="409dp"
                 android:layout_height="91dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -118,7 +117,60 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_gravity="left"
-                    android:layout_marginLeft="20dp" />
+                    android:layout_marginRight="40dp" />
+
+                <ImageView
+                    android:id="@+id/btnCuatro"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="left" />
+
+            </LinearLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/linearLayout18"
+                android:layout_width="409dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvCinco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="110dp"
+                    android:layout_marginLeft="110dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="0dp" />
+
+                <TextView
+                    android:id="@+id/tvCuatro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="100dp"
+                    android:layout_marginRight="100dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:layout_conversion_absoluteHeight="19dp"
+                    tools:layout_conversion_absoluteWidth="0dp" />
+
+            </android.support.constraint.ConstraintLayout>
+
+
+            <LinearLayout
+                android:layout_width="409dp"
+                android:layout_height="91dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
 
                 <ImageView
                     android:id="@+id/btnSeis"
@@ -130,7 +182,9 @@
                     android:id="@+id/btnSiete"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:layout_gravity="left" />
+                    android:layout_gravity="left"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp" />
 
                 <ImageView
                     android:id="@+id/btnOcho"
@@ -144,26 +198,16 @@
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal">
 
-                <TextView
-                    android:id="@+id/tvCinco"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline5"
-                    app:layout_constraintStart_toStartOf="@+id/guideline4"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/tvSeis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="130dp"
+                    android:layout_marginRight="130dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline6"
                     app:layout_constraintHorizontal_bias="0.53"
@@ -175,8 +219,8 @@
                     android:id="@+id/tvSiete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="78dp"
+                    android:layout_marginRight="78dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline7"
                     app:layout_constraintHorizontal_bias="0.555"
@@ -190,8 +234,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/guideline8"
                     app:layout_constraintHorizontal_bias="0.493"
@@ -240,7 +284,8 @@
                 android:layout_width="412dp"
                 android:layout_height="89dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="25dp"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -248,7 +293,7 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:layout_gravity="left"
-                    android:layout_marginLeft="65dp" />
+                    android:layout_marginRight="40dp" />
 
                 <ImageView
                     android:id="@+id/btnTres"
@@ -256,11 +301,6 @@
                     android:layout_height="90dp"
                     android:layout_gravity="left" />
 
-                <ImageView
-                    android:id="@+id/btnCuatro"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:layout_gravity="left" />
 
             </LinearLayout>
 
@@ -268,11 +308,11 @@
                 android:id="@+id/linearLayout3"
                 android:layout_width="match_parent"
                 android:layout_height="26dp"
+                android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toStartOf="@+id/tvDos"
                 app:layout_constraintStart_toStartOf="@+id/tvDos">
-
 
 
                 <android.support.constraint.Guideline
@@ -307,8 +347,8 @@
                     android:id="@+id/tvDos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="62dp"
+                    android:layout_marginLeft="62dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -321,8 +361,8 @@
                     android:id="@+id/tvTres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="142dp"
+                    android:layout_marginLeft="142dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -332,18 +372,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.571" />
 
-                <TextView
-                    android:id="@+id/tvCuatro"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline13"
-                    app:layout_constraintStart_toStartOf="@+id/guideline12"
-                    app:layout_constraintTop_toTopOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -351,7 +379,6 @@
             <ImageButton
                 android:layout_width="116dp"
                 android:layout_height="111dp"
-                android:layout_marginTop="40dp"
                 android:background="@mipmap/arrow"
                 android:onClick="btn_Regresar" />
 

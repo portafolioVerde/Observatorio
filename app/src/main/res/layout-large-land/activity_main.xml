@@ -93,6 +93,12 @@
                 android:onClick="regresarEspecies"
                 android:outlineAmbientShadowColor="@color/colorPrimary"
                 android:outlineSpotShadowColor="@color/colorPrimary" />
+            <ImageButton
+                android:onClick="ir_mapa"
+                android:id="@+id/map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@android:drawable/ic_menu_zoom" />
 
         </LinearLayout>
 

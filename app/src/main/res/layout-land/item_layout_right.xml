@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="260dp"
+    android:layout_marginLeft="200dp"
+    android:layout_marginTop="2dp"
     android:background="@color/fui_transparent"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="false">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="79dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="2dp"
         android:background="@color/fui_transparent"
         tools:layout_editor_absoluteX="3dp"
         tools:layout_editor_absoluteY="4dp">
@@ -46,11 +48,12 @@
             android:id="@+id/txtTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="70dp"
+            android:paddingLeft="10dp"
             android:text="Ave "
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textSize="15sp"
-            app:layout_constraintBottom_toTopOf="@+id/fondoReporte" />
+            app:layout_constraintBottom_toTopOf="@+id/fondoReporte"
+            app:layout_constraintStart_toEndOf="@+id/textView5" />
 
 
         <TextView
@@ -70,17 +73,13 @@
         <TextView
             android:id="@+id/txtDetalle"
             android:layout_width="339dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="56dp"
-            android:layout_marginLeft="56dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="3dp"
+            android:layout_height="27dp"
+            android:layout_marginTop="23dp"
             android:lineSpacingExtra="-4dp"
             android:text="Av Siempre Viva"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="10sp"
-            app:layout_constraintBottom_toTopOf="@+id/txtDetalle2"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -103,10 +102,12 @@
         <TextView
             android:id="@+id/txtDetalle2"
             android:layout_width="348dp"
-            android:layout_height="28dp"
-            android:layout_marginTop="29dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginBottom="18dp"
             android:text="Viernes 01 Marzo "
             android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView6"
