@@ -85,6 +85,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Optional;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static java.util.stream.DoubleStream.of;
@@ -104,6 +105,7 @@ public class RegistrosActivity extends AppCompatActivity {
     private AvistAdapter avistAdapter;
 
     private static final AtomicInteger count = new AtomicInteger(1);
+    private static final AtomicInteger count_01 = new AtomicInteger(1);
 
     public FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -127,13 +129,11 @@ public class RegistrosActivity extends AppCompatActivity {
     @BindView(R.id.txtLng)
     TextView tLng;
 
-    TextView txtLat,txtLng;
-
-    private List<ReporteEspecie> reporteEspecie;
-
-    LocationManager locationManager;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
     AlertDialog alert = null;
+    private DatabaseReference mDatabase;
 
     public static final String PREFERENCIAS = "MyPrefs";
     private SharedPreferences sharedPref;
@@ -143,28 +143,26 @@ public class RegistrosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registros);
 
-
-
-        //getDatos(Locale.getDefault());
-        checkIfLocationOpened();
-
+        mDatabase= FirebaseDatabase.getInstance().getReference().child("Users");
         ////////////////Persistencia sin conexion FireStore///////////////////////////
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
         db.setFirestoreSettings(settings);
         ///////////////////////////////////////////////////////////////////////////////
+        ButterKnife.bind(this);
+        //getDatos(Locale.getDefault());
+        checkIfLocationOpened();
 
         ParoImpar();
 
-        ButterKnife.bind(this);
-
         mFirebaseAuth = FirebaseAuth.getInstance();
+
         registrarLocalizacion();
         localizacion();
-
         detectarConx();
-    }//FinOnCreate
+
+    }
 
     private void detectarConx() {
         ConnectivityManager connectivityManager = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -177,6 +175,10 @@ public class RegistrosActivity extends AppCompatActivity {
         } else {
             SharedPreferences prefs = getSharedPreferences((getString(R.string.preference_file_key)),MODE_PRIVATE);
             String direc = prefs.getString((getString(R.string.direccion_key)),"");
+            String latG = prefs.getString("latitudG","");
+            String lngG = prefs.getString("longitudG","");
+            tLat.setText(latG);
+            tLng.setText(lngG);
             tDireccion.setText(direc);
         }
 
@@ -205,10 +207,6 @@ public class RegistrosActivity extends AppCompatActivity {
             alert.show();
         }
         return false;
-
-    }
-
-    public void AlertNoGps() {
 
     }
 
@@ -249,26 +247,32 @@ public class RegistrosActivity extends AppCompatActivity {
 
     }
 
-    //Metodo para detectar gps activo
-
-
-    //Metodo que obtiene fecha y hora
-    public void times(View v) {
-
-    }
-
     //Metodo Anfibio
     public void onAnfibio(View view) {
         Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
+
+        String direccionC = "Anfibio";
+        double latitude = Double.parseDouble(tLat.getText().toString().trim());
+        double longitude = Double.parseDouble(tLng.getText().toString().trim());
+        UserInfo userInfo = new UserInfo(direccionC,longitude,latitude);
+        mDatabase.child("Users/").child(mFirebaseAuth.getCurrentUser().getDisplayName()).child("/"+count_01.getAndIncrement()).setValue(userInfo);
+
+        /*DatabaseReference myRef = database.getReference()
+                .child("Data")
+                .child("Users")
+                .child(mFirebaseAuth.getCurrentUser().getDisplayName()+"/"+"ReportesCoordenadas/"+count_01.getAndIncrement());
+
+        myRef.setValue(tLng.getText().toString());
+        myRef.setValue(tLat.getText().toString());*/
 
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
-        r.put("lat",  tLat.getText());
-        r.put("lng",  tLng.getText());
+        //r.put("lat",  tLat.getText());
+        //r.put("lng",  tLng.getText());
         r.put("especie", "Anfibio");
         r.put("subEspecie", "");
         r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
@@ -352,13 +356,20 @@ public class RegistrosActivity extends AppCompatActivity {
     public void onMamifero(View view) {
         Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
+
+        String direccionC = "Mamifero";
+        double latitude = Double.parseDouble(tLat.getText().toString().trim());
+        double longitude = Double.parseDouble(tLng.getText().toString().trim());
+        UserInfo userInfo = new UserInfo(direccionC,longitude,latitude);
+        mDatabase.child("Users/").child(mFirebaseAuth.getCurrentUser().getDisplayName()).child("/"+count_01.getAndIncrement()).setValue(userInfo);
+
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
-        r.put("lat",  tLat.getText());
-        r.put("lng",  tLng.getText());
+        //r.put("lat",  tLat.getText());
+        //r.put("lng",  tLng.getText());
         r.put("especie", "Mamifero");
         r.put("subEspecie", "");
         r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
@@ -439,13 +450,18 @@ public class RegistrosActivity extends AppCompatActivity {
     public void onAve(View view) {
         Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
+        String direccionC = "Ave";
+        double latitude = Double.parseDouble(tLat.getText().toString().trim());
+        double longitude = Double.parseDouble(tLng.getText().toString().trim());
+        UserInfo userInfo = new UserInfo(direccionC,longitude,latitude);
+        mDatabase.child("Users/").child(mFirebaseAuth.getCurrentUser().getDisplayName()).child("/"+count_01.getAndIncrement()).setValue(userInfo);
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
-        r.put("lat",  tLat.getText());
-        r.put("lng",  tLng.getText());
+        //r.put("lat",  tLat.getText());
+        //r.put("lng",  tLng.getText());
         r.put("especie", "Ave");
         r.put("subEspecie", "");
         r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
@@ -526,13 +542,18 @@ public class RegistrosActivity extends AppCompatActivity {
     public void onReptil(View view) {
         Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
+        String direccionC = "Reptil";
+        double latitude = Double.parseDouble(tLat.getText().toString().trim());
+        double longitude = Double.parseDouble(tLng.getText().toString().trim());
+        UserInfo userInfo = new UserInfo(direccionC,longitude,latitude);
+        mDatabase.child("Users/").child(mFirebaseAuth.getCurrentUser().getDisplayName()).child("/"+count_01.getAndIncrement()).setValue(userInfo);
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
-        r.put("lat",  tLat.getText());
-        r.put("lng",  tLng.getText());
+        //r.put("lat",  tLat.getText());
+        //r.put("lng",  tLng.getText());
         r.put("especie", "Reptil");
         r.put("subEspecie", "");
         r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
@@ -619,8 +640,8 @@ public class RegistrosActivity extends AppCompatActivity {
         r.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
         r.put("email", mFirebaseAuth.getCurrentUser().getEmail());
         r.put("direccion", tDireccion.getText());
-        r.put("lat",  tLat.getText());
-        r.put("lng",  tLng.getText());
+        //r.put("lat",  tLat.getText());
+        //r.put("lng",  tLng.getText());
         r.put("especie", "Desconocida");
         r.put("fechaYhora", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
                 locale) + " de " + today.get(Calendar.YEAR) + " a las " + today.get(Calendar.HOUR) + ":" + today.get(Calendar.MINUTE) + " " + today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
@@ -722,21 +743,21 @@ public class RegistrosActivity extends AppCompatActivity {
     //Convertidor Geocoder para obtener direccion precisa
     private class milocalizacionListener implements LocationListener {
         @Override
+        @Optional
         public void onLocationChanged(Location location) {
 
             //System.out.println("La direccion ha cambiado");
             Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
             try {
                 List<Address> direccion = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-
-                Double lat = direccion.get(0).getLatitude();
-                Double lng = direccion.get(0).getLongitude();
-                String latS = String.valueOf(lat);
-                String lngS = String.valueOf(lng);
-
                 tDireccion.setText(direccion.get(0).getAddressLine(0));
 
+                Double lat = location.getLatitude();
+                String latS = String.valueOf(lat);
                 tLat.setText(latS);
+
+                Double lng = location.getLongitude();
+                String lngS = String.valueOf(lng);
                 tLng.setText(lngS);
 
                 Context context = getApplicationContext();
@@ -744,6 +765,8 @@ public class RegistrosActivity extends AppCompatActivity {
                 sharedPref = context.getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString(getString(R.string.direccion_key), direccion.get(0).getAddressLine(0));
+                editor.putString("latitudG",latS);
+                editor.putString("longitudG",lngS);
                 editor.apply();
 
             } catch (IOException e) {

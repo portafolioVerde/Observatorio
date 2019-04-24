@@ -1,23 +1,17 @@
 package com.example.usuario.app.myroodent;
-
-import android.support.v7.app.AppCompatActivity;
-
-import java.util.Date;
-
-import static java.text.DateFormat.getDateInstance;
-
 public class ReporteEspecie {
 
     String email,direccion,especie,nombre,doc;
     Long id;
     int img;
+    public double latitude,longitude;
     String fechaYhora;
 
     public ReporteEspecie(){
 
     }
 
-    public ReporteEspecie(int img,String doc,Long id, String email, String direccion, String especie, String nombre, String fechaYhora) {
+    public ReporteEspecie(double latitude,double longitude,int img,String doc,Long id, String email, String direccion, String especie, String nombre, String fechaYhora) {
         this.doc = doc;
         this.id = id;
         this.email = email;
@@ -26,7 +20,11 @@ public class ReporteEspecie {
         this.nombre = nombre;
         this.fechaYhora = fechaYhora;
         this.img = img;
+        this.latitude=latitude;
+        this.longitude=longitude;
     }
+
+
     public String getDoc(){
         return doc;
     }

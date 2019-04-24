@@ -211,7 +211,19 @@
                     app:layout_constraintEnd_toEndOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
+            <TextView
+                android:id="@+id/txtLng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/fui_transparent" />
 
+            <TextView
+                android:id="@+id/txtLat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/fui_transparent" />
             <ImageButton
                 android:id="@+id/btnVolver"
                 android:layout_width="75dp"

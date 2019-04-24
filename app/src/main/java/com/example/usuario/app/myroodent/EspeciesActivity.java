@@ -7,15 +7,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.protobuf.Empty;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EspeciesActivity extends RegistrosActivity {
 
@@ -46,11 +50,12 @@ public class EspeciesActivity extends RegistrosActivity {
 
         mFirestore = FirebaseFirestore.getInstance();
 
+
         mFirestore.collection("Data")
                 .document(mFirebaseAuth.getCurrentUser().getDisplayName())
                 .collection("Reportes")
-                //.orderBy("id")
                 .whereEqualTo("subEspecie","" )
+                .orderBy("id")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(QuerySnapshot documentSnapshots,FirebaseFirestoreException e) {
@@ -68,6 +73,7 @@ public class EspeciesActivity extends RegistrosActivity {
                             }
                         }
                    }
+
         });
     }
     public void ir_menu(View view) {
