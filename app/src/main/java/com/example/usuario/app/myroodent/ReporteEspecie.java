@@ -5,26 +5,28 @@ public class ReporteEspecie {
     Long id;
     int img;
     public double latitude,longitude;
-    String fechaYhora;
+    String fecha,hora;
 
     public ReporteEspecie(){
 
     }
 
-    public ReporteEspecie(double latitude,double longitude,int img,String doc,Long id, String email, String direccion, String especie, String nombre, String fechaYhora) {
+    public ReporteEspecie(double latitude,double longitude,int img,String doc,Long id, String email, String direccion, String especie, String nombre, String fecha,String hora) {
         this.doc = doc;
         this.id = id;
         this.email = email;
         this.direccion = direccion;
         this.especie = especie;
         this.nombre = nombre;
-        this.fechaYhora = fechaYhora;
+        this.fecha = fecha;
+        this.hora = hora;
         this.img = img;
         this.latitude=latitude;
         this.longitude=longitude;
     }
 
-
+    public String getHora(){ return hora; }
+    public  void setHora(){this.hora = hora;}
     public String getDoc(){
         return doc;
     }
@@ -65,14 +67,14 @@ public class ReporteEspecie {
         this.nombre = nombre;
     }
 
-    public String getFechaYhora() {
+    public String getFecha() {
 
-        return fechaYhora;
+        return fecha;
     }
 
-    public void setFechaYhora(String fechaYhora) {
+    public void setFecha(String fecha) {
 
-        this.fechaYhora = fechaYhora;
+        this.fecha = fecha;
     }
 
     public Long getId(){
@@ -95,8 +97,5 @@ public class ReporteEspecie {
     public String toString(){
         return direccion;
     }
-
-
-
 }
 

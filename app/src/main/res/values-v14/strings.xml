@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="direcci_n">Dirección:</string>
+    <string name="facebook_app_id">614101389041707</string>
+    <string name="facebook_application_id">614101389041707</string>
+    <string name="fb_login_protocol_scheme">fb614101389041707</string>
+    <string name="default_web_client_id">54295220565-ae26dcg3sqklujivmg68a3dm4cql2i8p.apps.googleusercontent.com</string>
+    <string name="app_name">Observatorio Móvil</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="especies">Especies</string>
+    <string name="registro">Completar Registro</string>
+    <string name="title_activity_mapa">Map</string>
+    <string name="seleccionespecie">Seleccione la especie vista</string>
+    <string name="especieregistrada">Gracias por tu registro</string>
+    <string name="registrocompleto">Hemos registrado los siguientes datos de tu avistamiento:</string>
+    <string name="regresarregistros">Regresar a tus registros</string>
+    <string name="completarregistrostring">Completar Registro</string>
+    <string name="regresarmenu_1">Regresar al Menú</string>
+    <string name="preference_file_key">fichero01</string>
+    <string name="direccion_key">direccion_01</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="reportar_especies">Reportar Especies</string>
+    <string name="regresar_al_inicio">Regresar al Inicio</string>
+    <string name="lista_de_reportes">Lista de Reportes</string>
+    <string name="reportar">Reportar</string>
+</resources>

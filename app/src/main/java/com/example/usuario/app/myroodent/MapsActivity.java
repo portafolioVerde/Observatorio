@@ -1,6 +1,8 @@
 package com.example.usuario.app.myroodent;
 
 import android.content.ClipData;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Location;
@@ -9,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -42,27 +46,32 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener,GoogleMap.OnMapClickListener {
 
-
     private static final String TAG = "Mensaje:";
+    private static  final int defaultZoom = 10;
     public FirebaseAuth mFirebaseAuth;
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
     private GoogleMap mMap;
     private ChildEventListener mChildEventListener;
-    private LatLngBounds COLOMBIA = new LatLngBounds(
-            new LatLng(5.90082666, -74.721586), new LatLng(5.90082666, -74.721586));
+    private LatLngBounds PuertoTriunfo = new LatLngBounds(
+            new LatLng(6.003979, -75.021556), new LatLng(6.003979, -75.021556));
     DatabaseReference mUsers;
-
-
     Marker marker;
-
-
+    @BindView(R.id.btn_Regresar_Home)
+    Button btn_Regresar_Home;
+    @BindView(R.id.btn_Regresar_Lista)
+    Button btn_Regresar_Lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ButterKnife.bind(this);
 
         mFirebaseAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
@@ -72,7 +81,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
         mFirestore.setFirestoreSettings(settings);
         //////////////////////////////////////////////
-        traerDireccion();
+
 
         Locale locale = new Locale("es_419");//Convertidor de idioma local
         Locale.setDefault(locale);
@@ -89,12 +98,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mUsers = FirebaseDatabase.getInstance().getReference("Users/Users/"+mFirebaseAuth.getCurrentUser().getDisplayName());
         mUsers.push().setValue(marker);
 
+        btn_Regresar_Lista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_Regresar_Lista.setBackgroundResource(R.mipmap.icon_list_white);
+                Intent intent = new Intent(getApplicationContext(),EspeciesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_Regresar_Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_Regresar_Home.setBackgroundResource(R.mipmap.icon_home_white);
+                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
-    private void traerDireccion() {
 
-
-    }
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -109,9 +132,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     LatLng location = new LatLng(info.longitude,info.latitude);
 
-                    Log.d("Mensaje","Coordenadas: "+location);
-                    mMap.addMarker(new MarkerOptions().position(location).title(info.direccionC)).setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(COLOMBIA.getCenter(), 10));
+                    //Log.d("Mensaje","Coordenadas: "+location);
+                    //mMap.addMarker(new MarkerOptions().position(location).title(info.especieC))
+                      //      .setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher_foreground)).anchor(0.0f,1.0f).position(location).title(info.especieC));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PuertoTriunfo.getCenter(), defaultZoom));
+
                 }
             }
 
@@ -146,5 +172,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapClick(LatLng latLng) {
 
+    }
+
+    public void btn_RegresarMap(View view) {
+
+
+    }
+
+    public void btn_RegresaraRegistros(View view) {
+
+        Intent intent = new Intent(this,RegistrosActivity.class);
+        startActivity(intent);
+    }
+
+    public void btn_RegresaraReportesLista(View view) {
+
+    }
+
+    public void aumentar_zoom(View view) {
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PuertoTriunfo.getCenter(), defaultZoom+2));
+    }
+
+    public void disminuir_zoom(View view) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(PuertoTriunfo.getCenter(), defaultZoom-2));
     }
 }

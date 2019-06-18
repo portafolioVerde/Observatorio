@@ -16,6 +16,7 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
     private List<ReporteEspecie> reporteEspecie;
     private OnItemClickListener mListener;
 
+
     public interface OnItemClickListener{
 
         void OnItemClick (int position);
@@ -68,24 +69,25 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
 
         holder.TxtTitulo.setText(reporteEspecie.get(position).getEspecie());
         holder.TxtDetalle.setText(reporteEspecie.get(position).getDireccion());
-        holder.TxtDetalle2.setText(reporteEspecie.get(position).getFechaYhora());
+        holder.TxtDetalle2.setText(reporteEspecie.get(position).getFecha());
+        holder.TxtDetalle3.setText(reporteEspecie.get(position).getHora());
 
-        if(holder.TxtTitulo.getText().equals("Mamifero")){
-            holder.ImgPhoto.setImageResource(R.drawable.mamiferoactivo);
+        /*if(holder.TxtTitulo.getText().equals("Mamifero")){
+            holder.ImgPhoto.setImageResource(R.drawable.mamifero_activo);
         }else{
             if(holder.TxtTitulo.getText().equals("Ave")){
-                holder.ImgPhoto.setImageResource(R.drawable.aveactiva);
+                holder.ImgPhoto.setImageResource(R.drawable.aves_activo);
             }else{
                 if(holder.TxtTitulo.getText().equals("Anfibio")){
-                    holder.ImgPhoto.setImageResource(R.drawable.anfibioactivo);
+                    holder.ImgPhoto.setImageResource(R.drawable.anfibio_activo);
                 }else{
                     if (holder.TxtTitulo.getText().equals("Reptil")){
-                        holder.ImgPhoto.setImageResource(R.drawable.reptilactivo);
+                        holder.ImgPhoto.setImageResource(R.drawable.reptil_activo);
                     }
                 }
             }
 
-        }
+        }*/
 
 
     }
@@ -102,6 +104,7 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
         public TextView TxtTitulo;
         public TextView TxtDetalle;
         public TextView TxtDetalle2;
+        public TextView TxtDetalle3;
         public ImageView ImgPhoto;
 
         public ViewHolder(View itemView) {
@@ -113,16 +116,15 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
             TxtTitulo = (TextView) mView.findViewById(R.id.txtTitulo);
             TxtDetalle = (TextView) mView.findViewById(R.id.txtDetalle);
             TxtDetalle2 = (TextView) mView.findViewById(R.id.txtDetalle2);
+            TxtDetalle3 = (TextView) mView.findViewById(R.id.txtDetalle3);
             ImgPhoto = (ImageView) mView.findViewById(R.id.imgPhoto);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Intent intent = new Intent(mView.getContext(), CompleteActivity.class);
-                    intent.putExtra("doc", reporteEspecie.get(getAdapterPosition()).getDoc());
+                    Intent intent = new Intent(mView.getContext(), RegistrosActivity.class);
+                    intent.putExtra("dac", reporteEspecie.get(getAdapterPosition()).getDoc());
                     mView.getContext().startActivity(intent);
-
                 }
             });
         }

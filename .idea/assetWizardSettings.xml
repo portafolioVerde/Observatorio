@@ -45,7 +45,42 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+                                      <entry key="backgroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="0" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundClipArt">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                                <entry key="scalingPercent" value="62" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundText">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
@@ -60,6 +95,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="backgroundImage" value="C:\Users\Usuario\Documents\AndroidProyects\ObservatorioMovil\ObservatorioMovil\MyRoodent02-master\app\src\main\res\drawable\fondo_azul_hd.png" />
+                                      <entry key="backgroundLayerName" value="ic_logo_map_layer" />
+                                      <entry key="foregroundImage" value="C:\Users\Usuario\Documents\AndroidProyects\ObservatorioMovil\ObservatorioMovil\MyRoodent02-master\app\src\main\res\mipmap\botonmuertohover.png" />
+                                      <entry key="foregroundLayerName" value="ic_mapa_fl" />
+                                      <entry key="outputName" value="ic_logo_map" />
                                       <entry key="previewDensity" value="MEDIUM" />
                                     </map>
                                   </option>
@@ -76,7 +116,19 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="color" value="000000" />
+                                                <entry key="color" value="f57c00" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="clipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_place_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -88,6 +140,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -98,7 +151,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Usuario\Downloads\MyRoodent02-master\MyRoodent02-master\app\src\main\res\mipmap-anydpi-v26\img_multi_login.png" />
+                                      <entry key="iconShape" value="NONE" />
+                                      <entry key="imageAsset" value="C:\Users\Usuario\Documents\Copia seguridad\Copia_16_05_2019\MyRoodent02-master\app\src\main\res\drawable\reportar_activo.png" />
+                                      <entry key="outputName" value="icon_app_multiresource_02" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -127,17 +182,17 @@
                             </entry>
                           </map>
                         </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
-                          </map>
-                        </option>
                       </PersistentState>
                     </value>
                   </entry>
                 </map>
               </option>
             </PersistentState>
+          </value>
+        </entry>
+        <entry key="vectorWizard">
+          <value>
+            <PersistentState />
           </value>
         </entry>
       </map>

@@ -1,6 +1,7 @@
 package com.example.usuario.app.myroodent;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -20,26 +21,19 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RegistradoActivity extends AppCompatActivity {
-
-
-
     @BindView(R.id.tvNombre)
     TextView tvNombre;
-    @BindView(R.id.tvFechayHora)
-    TextView tvFechayHora;
+    @BindView(R.id.tvHora)
+    TextView tvHora;
+    @BindView(R.id.tvFecha)
+    TextView tvFecha;
     @BindView(R.id.tvDireccionRegistrada)
     TextView tvDireccionRegistrada;
     @BindView(R.id.tvSubEspecieRegistrada)
@@ -58,7 +52,9 @@ public class RegistradoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrado);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        ButterKnife.bind(this);//Libreria ButterKnife
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
@@ -74,11 +70,9 @@ public class RegistradoActivity extends AppCompatActivity {
         final String subEspecie = extras.getString("subEspecie");
         final String data = extras.getString("doc");
 
-        ButterKnife.bind(this);//Libreria ButterKnife
-
         mFirebaseAuth = FirebaseAuth.getInstance();//Instanciar FirebaesAuth
 
-        mFirestore = FirebaseFirestore.getInstance();//Instaciar FireStore
+        mFirestore = FirebaseFirestore.getInstance();//Instanciar FireStore
 
         //Referenciar Documento donde se añadira campo SubEspecie
         DocumentReference ref = mFirestore.collection("Data")
@@ -115,7 +109,8 @@ public class RegistradoActivity extends AppCompatActivity {
 
                         tvEspecieRegistrada.setText(document.get("especie").toString());
                         tvSubEspecieRegistrada.setText(document.get("subEspecie").toString());
-                        tvFechayHora.setText(document.get("fechaYhora").toString());
+                        tvFecha.setText(document.get("fecha").toString());
+                        tvHora.setText(document.get("hora").toString());
                         tvDireccionRegistrada.setText(document.get("direccion").toString());
                         tvNombre.setText(mFirebaseAuth.getCurrentUser().getDisplayName());
 

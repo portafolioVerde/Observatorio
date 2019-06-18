@@ -1,112 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout10"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo1naranjaabajo"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
     android:layout_gravity="center_horizontal"
-    >
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            >
-
+    android:background="@drawable/fondo_app_naranja"
+    android:gravity="center_horizontal"
+    tools:context=".MainActivity">
+    <!-- Elementos utilizados anteriormenet para mostrar Imagen,Usuario,Email,ProveedorAuth
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imgPhotoProfile"
-                android:layout_width="102dp"
-                android:layout_height="103dp"
-                android:layout_marginTop="45dp"
-                android:src="@mipmap/ic_launcher"
-                app:civ_border_color="@color/colorPrimary" />
-
-            <TextView
-                android:layout_marginTop="25dp"
-                android:id="@+id/tvUserName"
-                style="@style/TextViewBase"
-                android:hint="@string/main.hint.userName"
                 />
-
             <TextView
-                android:layout_marginTop="8sp"
+                android:id="@+id/tvUserName"
+                />
+            <TextView
                 android:id="@+id/tvEmail"
-                style="@style/TextViewBase"
-                android:hint="@string/main.hint.email"
-                app:layout_constraintTop_toBottomOf="@id/tvUserName" />
-
+                />
             <TextView
-                android:layout_marginTop="8sp"
-                android:id="@+id/tvProvider"
-                style="@style/TextViewBase"
-                android:hint="@string/main.hint.provider"
-                app:layout_constraintTop_toBottomOf="@id/tvEmail" />
+            android:id="@+id/tvProvider"
+                 />
+            -->
 
 
-            <TextView
+    <ImageButton
+        android:id="@+id/btn_Map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@mipmap/icon_map_blue"
+        app:layout_constraintBottom_toTopOf="@+id/guideline32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline35"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01" />
 
-                android:layout_marginTop="30dp"
-                android:id="@+id/tvConfirmar"
-                style="@style/TextViewBase"
-                android:gravity="center_horizontal"
-                android:text="Viste un animal en la vía?"
-                android:textColor="@color/colorPrimary"
-                android:textSize="25dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvProvider" />
-            <LinearLayout
-                style="@style/TextViewBase"
-                app:layout_constraintTop_toBottomOf="@+id/tvConfirmar"
-                android:orientation="horizontal"
-                android:layout_marginTop="55dp"
-                android:gravity="center"
-                >
-                <ImageButton
-                    android:id="@+id/btnNo"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@drawable/no"
-                    android:onClick="noContinuar"
-                    />
-                <ImageButton
-                    android:id="@+id/btnSi"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginLeft="70dp"
-                    android:background="@drawable/si"
-                    android:onClick="siContinuar"/>
-            </LinearLayout>
+    <ImageButton
+        android:id="@+id/btnReportar"
+        android:layout_width="243dp"
+        android:layout_height="249dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/reportar_activo"
+        app:layout_constraintBottom_toTopOf="@+id/guideline32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline29"
+        app:layout_constraintVertical_bias="1.0" />
 
-            <ImageButton
-                android:layout_marginTop="25dp"
-                android:outlineSpotShadowColor="@color/colorPrimary"
-                android:outlineAmbientShadowColor="@color/colorPrimary"
-                android:layout_width="53dp"
-                android:layout_height="59dp"
-                android:background="@drawable/playlist_edit"
-                android:onClick="regresarEspecies"/>
-
-            <ImageButton
-                android:onClick="ir_mapa"
-                android:id="@+id/map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@android:drawable/ic_menu_zoom" />
-
-        </LinearLayout>
-
-    </ScrollView>
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="111dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/reportar"
+        android:textColor="@android:color/background_dark"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guideline31"
+        app:layout_constraintEnd_toStartOf="@+id/guideline34"
+        app:layout_constraintStart_toStartOf="@+id/guideline33"
+        app:layout_constraintTop_toTopOf="@+id/guideline32"
+        app:layout_constraintVertical_bias="0.07" />
 
 
+    <Button
+        android:id="@+id/btn_Lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/borderedondo2"
+        android:text="@string/completar"
+        android:textColor="@color/browser_actions_bg_grey"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline30"
+        app:layout_constraintEnd_toStartOf="@+id/guideline34"
+        app:layout_constraintStart_toStartOf="@+id/guideline33"
+        app:layout_constraintTop_toTopOf="@+id/guideline31" />
 
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textViewDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="@android:color/transparent"
+        android:textColorLink="@android:color/transparent"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tvLon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/transparent"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="403dp" />
+
+    <TextView
+        android:id="@+id/tvLat"
+        android:layout_width="9dp"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/transparent"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteY="279dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline29"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.01" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.99" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.86" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.01" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline34"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.99" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline35"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.82" />
+
+
+</android.support.constraint.ConstraintLayout>

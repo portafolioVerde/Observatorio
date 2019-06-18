@@ -15,12 +15,32 @@
       },
       "oauth_client": [
         {
+          "client_id": "54295220565-t9l4jfc6205q3jq66uoup1bbbn7fvarl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.usuario.app.myroodent",
+            "certificate_hash": "b6a10e3975cd41e54f3188a687f0d5a939ca54dd"
+          }
+        },
+        {
+          "client_id": "54295220565-8lv3shfn9e6vb7b7jjclta4nrf5p27k8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.usuario.app.myroodent",
+            "certificate_hash": "3484db6301831614f32346e718f8d62df824b1ba"
+          }
+        },
+        {
           "client_id": "54295220565-mm0hi2v6tb6rnonp24imoo5c75tis34r.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.usuario.app.myroodent",
             "certificate_hash": "5f69db3753a59932006cde0f1e2154c9c004b657"
           }
+        },
+        {
+          "client_id": "54295220565-ae26dcg3sqklujivmg68a3dm4cql2i8p.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
