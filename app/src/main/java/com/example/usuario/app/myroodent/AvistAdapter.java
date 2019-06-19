@@ -9,6 +9,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
+/**
+ * El tipo Avist adapter.
+ * Se usa en este caso como puente que obtiene los datos de la clase ReporteEspecie.java
+ * Y se encarga ademas de crear las vistas para esa clase
+ */
 public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
 
     private int LEFT_CELL = 1;
@@ -17,23 +22,47 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
     private OnItemClickListener mListener;
 
 
+    /**
+     * La interfaz On item click listener.
+     * Es un metodo de devolución de llamada cuando se hace click en un elemento de la vista
+     */
     public interface OnItemClickListener{
 
+        /**
+         * On item click.
+         * @param position the position
+         * La posición de la vista en el adaptador
+         */
         void OnItemClick (int position);
     }
+
+    /**
+     * Set on item click listener.
+     * La devolución de llamada que se ejecutará
+     * @param listener the listener
+     */
     public void setOnItemClickListener (OnItemClickListener listener){
 
         mListener = listener;
 
     }
 
+    /**
+     * Instancia del Avist adapter.
+     *
+     * @param reporteEspecie la clase reporte especie
+     */
     public AvistAdapter(List<ReporteEspecie> reporteEspecie){
         super();
 
         this.reporteEspecie = reporteEspecie;
 
     }
-    //
+
+    /**
+     * Fin javaDoc
+     *
+     */
     @Override
     public int getItemViewType(int position) {
         if(position % 2 == 0){
@@ -98,15 +127,41 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
         return reporteEspecie.size();
     }
 
+    /**
+     * The type View holder.
+     */
     public class ViewHolder extends RecyclerView.ViewHolder{
+        /**
+         * The M view.
+         */
         View mView;
 
+        /**
+         * The Txt titulo.
+         */
         public TextView TxtTitulo;
+        /**
+         * The Txt detalle.
+         */
         public TextView TxtDetalle;
+        /**
+         * The Txt detalle 2.
+         */
         public TextView TxtDetalle2;
+        /**
+         * The Txt detalle 3.
+         */
         public TextView TxtDetalle3;
+        /**
+         * The Img photo.
+         */
         public ImageView ImgPhoto;
 
+        /**
+         * Instantiates a new View holder.
+         *
+         * @param itemView the item view
+         */
         public ViewHolder(View itemView) {
 
             super(itemView);

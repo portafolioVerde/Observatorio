@@ -1,16 +1,26 @@
 package com.example.usuario.app.myroodent;
+
+/**
+ * La Clase ReporteEspecie.java es el objeto que hace la función
+ * de usuario donde se cnostruyen los campos
+ */
 public class ReporteEspecie {
 
-    String email,direccion,especie,nombre,doc;
+
+    String email, direccion, especie, nombre, doc;
     Long id;
     int img;
     public double latitude,longitude;
-    String fecha,hora;
+    String fecha, hora;
 
     public ReporteEspecie(){
 
     }
 
+    /**
+     * Instancia de ReporteEspecie y se definen los
+     * parametros que se van a utilizar en esta clase
+     */
     public ReporteEspecie(double latitude,double longitude,int img,String doc,Long id, String email, String direccion, String especie, String nombre, String fecha,String hora) {
         this.doc = doc;
         this.id = id;
@@ -25,8 +35,14 @@ public class ReporteEspecie {
         this.longitude=longitude;
     }
 
+    /**
+     * Constructores de cada uno de los parametros que
+     * se definieron anteriormente
+     */
     public String getHora(){ return hora; }
+
     public  void setHora(){this.hora = hora;}
+
     public String getDoc(){
         return doc;
     }
@@ -63,6 +79,7 @@ public class ReporteEspecie {
         return nombre;
     }
 
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -85,10 +102,10 @@ public class ReporteEspecie {
         this.id = id;
     }
 
-
     public int getImg(){
         return  getImg();
     }
+
     public void setImg(int img){
         this.img = img;
     }

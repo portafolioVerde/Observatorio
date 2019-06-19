@@ -10,7 +10,14 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+/**
+ * La clase GPStracker.java se utiliza para reibir notificaciones del LocationManager
+ * y detecta si se enctra activo o no el sistema de ubicación
+ */
 public class GPStracker implements LocationListener {
+    /**
+     * Instancia del Contexto
+     */
     Context context;
     public GPStracker(Context c){
         context = c;

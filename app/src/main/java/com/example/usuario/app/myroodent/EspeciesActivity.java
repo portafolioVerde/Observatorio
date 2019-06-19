@@ -28,13 +28,22 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * La clase EspeciesActivity.java se encarga de obtener
+ * los datos de la clase ReporteEspecie.java para cargarlos
+ * por medio del AvistAdapter, no fue necesario crear un metodo
+ * independiente para traer los datos de Firebase ya que se implementó
+ * la condición .whereEqualTo("subEspecie","" ) para mostrar los
+ * reportes que se encuentra sin subespecie registrada
+ */
 public class EspeciesActivity extends RegistrosActivity {
 
     private static final String TAG = "FireLog";
-    private RecyclerView mMainList;
-    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-    public AvistAdapter avistAdapter;
-    public List<ReporteEspecie> reporteEspecies;
+    private RecyclerView mMainList; //En el objeto main_list se cargan los reportes que se encuentran sin completar
+    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance(); //Instancia de la base de datos de FirebaseFirestore
+    public AvistAdapter avistAdapter; // Instancia del adaptador
+    public List<ReporteEspecie> reporteEspecies; // Instancia del objeto de reportes
+    //Instancia de variales tipo Button para navegar hacia el mapa y el menú principal
     Button btn_regresar_home_x;
     Button btn_regresar_map_x;
 
@@ -42,26 +51,19 @@ public class EspeciesActivity extends RegistrosActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_especies);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Función que se encarga de bloquear la rotación de pantalla
         btn_regresar_home_x = findViewById(R.id.btn_regresar_home_x);
         btn_regresar_map_x = findViewById(R.id.btn_regresar_map_x);
-
-
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
                 .build();
-        mFirestore.setFirestoreSettings(settings);
-
+        mFirestore.setFirestoreSettings(settings); //Metodo para persistencia de datos sin internet que provee Firebase
         reporteEspecies = new ArrayList<>();
         avistAdapter = new AvistAdapter(reporteEspecies);
-
         mMainList = (RecyclerView) findViewById(R.id.main_list);
-
         mMainList.setHasFixedSize(true);
         mMainList.setLayoutManager(new LinearLayoutManager(this));
         mMainList.setAdapter(avistAdapter);
-
         mFirestore = FirebaseFirestore.getInstance();
         btn_regresar_home_x.setOnClickListener(new View.OnClickListener() {
             @Override

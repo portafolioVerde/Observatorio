@@ -1,15 +1,20 @@
 package com.example.usuario.app.myroodent;
 
-import com.google.firebase.database.IgnoreExtraProperties;
-
+/**
+ * La clase UserInfo.java contiene los parametros y
+ * constructores que se usan en la clase MapsActivity.java
+ */
 public class UserInfo {
-    double latitude,longitude;
-    String especieC;
+    /**
+     * Se declaran las variables y posteriormente se generan
+     * los constructores de cada parametro que se va a utilizar
+     */
+    double latitude, longitude;
 
+    String especieC;
     public UserInfo(){
 
     }
-
     public double getLatitude() {
         return latitude;
     }
@@ -34,6 +39,9 @@ public class UserInfo {
         this.especieC = especieC;
     }
 
+    /**
+     * Instancia de los parametros que se usan para enviar las coordenadas a la BD
+     */
     public UserInfo(String especieC, double latitude, double longitude){
         this.latitude = latitude;
         this.longitude = longitude;

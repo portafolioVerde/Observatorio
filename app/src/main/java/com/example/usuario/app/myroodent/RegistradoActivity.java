@@ -1,5 +1,4 @@
 package com.example.usuario.app.myroodent;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -21,29 +19,38 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-
 import java.util.Locale;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * La Clase RegistradoActivity.java se encarga de
+ * mostrar y confirmar los datos que el usuario registró
+ * anteriormente
+ */
 public class RegistradoActivity extends AppCompatActivity {
-    @BindView(R.id.tvNombre)
-    TextView tvNombre;
-    @BindView(R.id.tvHora)
-    TextView tvHora;
-    @BindView(R.id.tvFecha)
-    TextView tvFecha;
-    @BindView(R.id.tvDireccionRegistrada)
-    TextView tvDireccionRegistrada;
-    @BindView(R.id.tvSubEspecieRegistrada)
-    TextView tvSubEspecieRegistrada;
-    @BindView(R.id.tvEspecieRegistrada)
-    TextView tvEspecieRegistrada;
-    @BindView(R.id.regresardRegistros)
-    Button regresardRegistros;
-    @BindView(R.id.regresar_Menu)
-    Button regresar_Menu;
+
+    /**
+     * Instancias de las variables que se utilizaron para
+     * obtener los datos registrados en la actividad anterior,
+     * estos datos se envian a Firebase
+     */
+
+    @BindView(R.id.tvNombre) TextView tvNombre;
+    @BindView(R.id.tvHora) TextView tvHora;
+    @BindView(R.id.tvFecha) TextView tvFecha;
+    @BindView(R.id.tvDireccionRegistrada) TextView tvDireccionRegistrada;
+    @BindView(R.id.tvSubEspecieRegistrada) TextView tvSubEspecieRegistrada;
+    @BindView(R.id.tvEspecieRegistrada) TextView tvEspecieRegistrada;
+    @BindView(R.id.regresardRegistros) Button regresardRegistros;
+    @BindView(R.id.regresar_Menu) Button regresar_Menu;
+
+    /**
+     * Se Instancia el metodo que se encarga de escuchar
+     * el estado de autenticacion del usuario y posteriormente
+     * se instancia la base de datos donde se guardan lso reportes
+     * de cada avistamiento.
+     */
     public FirebaseAuth mFirebaseAuth;
 
     private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
@@ -52,36 +59,45 @@ public class RegistradoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrado);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Metodo para bloquear la rotación de pantalla
 
-        ButterKnife.bind(this);//Libreria ButterKnife
-        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+        ButterKnife.bind(this); //Libreria ButterKnife
+        /**
+         * Persistencia de Datos de Firebase
+         * Si se completaron registros y no habia conexion
+         * a internet en el momento este metodo enviara los datos
+         * posteriormente cuando exista una conexión estable a internet.
+         */
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder() //Persistencia de Datos
                 .setPersistenceEnabled(true)
                 .build();
         mFirestore.setFirestoreSettings(settings);
 
-        Locale locale = new Locale("es_419");//Convertidor de idioma local
+        Locale locale = new Locale("es_419");//Metodo para establecer idioma en algunos dispositivos donde es necesario
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         this.getApplicationContext().getResources().updateConfiguration(config, null);
 
         Bundle extras = getIntent().getExtras();//Traer datos con Bundle Extras
-        final String subEspecie = extras.getString("subEspecie");
-        final String data = extras.getString("doc");
+        final String subEspecie = extras.getString("subEspecie"); //Subespecie que se seleccionó en CompleteActivity.java
+        final String data = extras.getString("doc"); //Id del docuemento donde se guardaron los datos de la ventana anterior
 
         mFirebaseAuth = FirebaseAuth.getInstance();//Instanciar FirebaesAuth
 
         mFirestore = FirebaseFirestore.getInstance();//Instanciar FireStore
 
-        //Referenciar Documento donde se añadira campo SubEspecie
+        /**
+         * Referenciar Documento donde se añadira campo SubEspecie
+         */
         DocumentReference ref = mFirestore.collection("Data")
                 .document(mFirebaseAuth.getCurrentUser().getDisplayName())
                 .collection("Reportes")
                 .document(data);
-
-        //Condicional que valida el campo SubEspecie
-        // y envia el dato SubEspecie seleccionado anteriormente
+        /**
+         * Condicional que valida el campo SubEspecie
+         * y envia el dato SubEspecie seleccionado anteriormente
+         */
         if(tvSubEspecieRegistrada!=null){
 
             ref.update("subEspecie",subEspecie)
@@ -99,7 +115,11 @@ public class RegistradoActivity extends AppCompatActivity {
                     });
 
         }
-
+        /**
+         * Inicialmente se obtuvo el ID del documento que el usuario esta
+         * completando y en este metodo se obtienen los campos existentes en
+         * ese documento.
+         */
         ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {

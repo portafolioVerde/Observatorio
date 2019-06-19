@@ -26,17 +26,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Optional;
 
+/**
+ * La clase SplashActivity.java se encarga de mostrar unos segundos un splash que contiene
+ * los logos e iconos de los colaboradores y ademas
+ */
 public class SplashActivity extends AppCompatActivity {
 
-    @BindView(R.id.tDireccion)
-    TextView tDireccion;
-
-    @BindView(R.id.tvLat)
-    TextView tLat;
-
-    @BindView(R.id.tvLon)
-    TextView tLng;
-
+    @BindView(R.id.tDireccion) TextView tDireccion;
+    @BindView(R.id.tvLat) TextView tLat;
+    @BindView(R.id.tvLon) TextView tLng;
     LocationManager locationManager;
     public SharedPreferences sharedPref;
     public LocationManager ubicacion;
@@ -44,15 +42,18 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        checkLocationPermission();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Este metodo bloquea la rotación de la pantalla
+        checkLocationPermission(); //Chekea si se encuentran activos los permisos de localización
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
-        localizacion(); //Solicita permisos COARSE & FINE LOCATION
+        ButterKnife.bind(this); //Referencia de la libreria ButterKnife
+        localizacion();
         registrarLocalizacion(); //Obtiene coordenadas y convierte en direccion los datos
 
-
+/**
+ * El siguiente metodo run se encarga de
+ * temporizar cuanto tarda en splash mostrandose
+ */
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -63,6 +64,11 @@ public class SplashActivity extends AppCompatActivity {
         },1000);
     }
 
+    /**
+     * Gestiona los permisos COARSE & FINE LOCATION y ejecuta
+     * los servicios de ubicación desde la primer pantalla que ve el usuario,
+     * intenta obtener la ultima ubicación y las mas cercana
+     */
     private void localizacion() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{
@@ -82,6 +88,13 @@ public class SplashActivity extends AppCompatActivity {
         ubicacion.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1, 0, new SplashActivity.milocalizacionListener());
     }
 
+    /**
+     * milocalizacionListener es el metodo que hace que las coordenadas
+     * que se obtienen se conviertan en una direccion o en una AddressLine
+     * también guarda las ubicaciones constantemente en el fichero de
+     * SharedPreferences para mostrarlos en caso que el valor de la
+     * tDireccion,tLat,Tlng sean null.
+     */
     private class milocalizacionListener implements LocationListener {
         @Override
         @Optional
@@ -149,6 +162,10 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * checkLocationPermission se encarga de validar
+     * si los permisos de localización se habilitaron
+     */
     public boolean checkLocationPermission()
     {
         String permission = "android.permission.ACCESS_FINE_LOCATION";

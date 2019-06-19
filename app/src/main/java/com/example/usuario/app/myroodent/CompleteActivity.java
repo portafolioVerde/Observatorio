@@ -27,8 +27,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
+/**
+ * La clase Complete activity.java
+ * Se encarga de obtener el ID del documento que seleccionó
+ * el usuario en la lista de reportes para completar los registros,
+ * luego de obtener el ID se muestran las subespecies según la especie
+ * seleccionada anteriormente. Se implementó la liberia butterknife
+ * "https://jakewharton.github.io/butterknife/", el metodo traerDoc();
+ * se encarga de ubicar los elementos según la especie. Y se envia la
+ * información registrada también a la clase RegistradoActivity.java
+ *
+ */
 public class CompleteActivity extends AppCompatActivity {
-
+/**
+ * mFirebasAuth es el metodo que proporciona la autenticación
+ * basada en correo electronico y contraseña
+ */
 public FirebaseAuth mFirebaseAuth;
 private FirebaseAuth.AuthStateListener mAuthStateListener;
 private static final String TAG = "Tarea";
@@ -38,39 +52,35 @@ private static final String ANFIBIO = "Anfibio";
 private static final String MAMIFERO = "Mamifero";
 private static final String OTRO = "Desconocida";
 
+/**
+ * Se instancian las variables de tipo Button
+ * para navegar por la app hacia la clase MapsActivity.java
+ * y EspeciesActivity.java también se instancian los textView
+ * y los ImageView que muestra las subespecies y la información
+ * del reporte que se esta procesando.
+ */
+
 FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
+@BindView(R.id.tvDireccion) TextView tvDireccion;
+@BindView(R.id.tvEspecie) TextView tvEspecie;
+@BindView(R.id.tvFecha) TextView tvFecha;
+@BindView(R.id.tvHora) TextView tvHora;
+@BindView(R.id.tvMensaje) TextView tvMensaje;
+@BindView(R.id.btnDos) ImageView btnDos;
+@BindView(R.id.btnTres) ImageView btnTres;
+@BindView(R.id.btnCuatro) ImageView btnCuatro;
+@BindView(R.id.btnCinco) ImageView btnCinco;
+@BindView(R.id.btnSeis) ImageView btnSeis;
+@BindView(R.id.btnSiete) ImageView btnSiete;
+@BindView(R.id.btnOcho) ImageView btnOcho;
+@BindView(R.id.btn_ir_menu) Button btn_ir_menu;
+@BindView(R.id.btn_ir_lista) Button btn_ir_lista;
 
+/**
+ * También se instancia la clase ReporteEspecie.java
+ * para comunicarse con la información de cada usuario.
+ */
 
-
-@BindView(R.id.tvDireccion)
-TextView tvDireccion;
-@BindView(R.id.tvEspecie)
-TextView tvEspecie;
-@BindView(R.id.tvFecha)
-TextView tvFecha;
-@BindView(R.id.tvHora)
-TextView tvHora;
-@BindView(R.id.tvMensaje)
-TextView tvMensaje;
-
-@BindView(R.id.btnDos)
-ImageView btnDos;
-@BindView(R.id.btnTres)
-ImageView btnTres;
-@BindView(R.id.btnCuatro)
-ImageView btnCuatro;
-@BindView(R.id.btnCinco)
-ImageView btnCinco;
-@BindView(R.id.btnSeis)
-ImageView btnSeis;
-@BindView(R.id.btnSiete)
-ImageView btnSiete;
-@BindView(R.id.btnOcho)
-ImageView btnOcho;
-@BindView(R.id.btn_ir_menu)
-Button btn_ir_menu;
-@BindView(R.id.btn_ir_lista)
-Button btn_ir_lista;
 public List<ReporteEspecie> reportesEspecies;
 
 @Override
@@ -107,6 +117,7 @@ protected void onCreate(Bundle savedInstanceState) {
         }
     });
     }
+
     public void traerDoc(){
     String doc = getIntent().getStringExtra("doc");
     mFirestore.collection("Data")

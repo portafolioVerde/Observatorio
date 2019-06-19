@@ -87,6 +87,10 @@ import butterknife.OnClick;
 import butterknife.Optional;
 import de.hdodenhof.circleimageview.CircleImageView;
 
+/**
+ * La clase MainActivity.java es ventana principal de interacción con el usuario
+ *
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 123;
@@ -98,9 +102,19 @@ public class MainActivity extends AppCompatActivity {
     private static final String MY_PHOTO_AUTH = "my_photo_auth";
     private static final String PATH_PROFILE = "path_profile";
     private static final String VACIO = "";
+    /**
+     * Instancia objeto tipo LocationManager.
+     */
     public LocationManager ubicacion;
+    /**
+     * Instancia objeto de tipo LocationManager.
+     */
     LocationManager locationManager;
-
+    /**
+     * Se utilizaron estas variables en algun momento para
+     * mostrar la foto de perfil el nombre y el correo del usuario
+     * en esta misma ventana
+     */
     /*@BindView(R.id.imgPhotoProfile)
     CircleImageView imgPhotoProfile;
     @BindView(R.id.tvUserName)
@@ -109,7 +123,15 @@ public class MainActivity extends AppCompatActivity {
     TextView tvEmail;
     @BindView(R.id.tvProvider)
     TextView tvProvider;*/
+    /**
+     * Instancia sharedPref para guardar los valores de las
+     * variables que se definen acontinuación en caso que no exista conexion a internet
+     */
     private SharedPreferences sharedPref;
+    /**
+     * Instancia de las varibles tDireccion tLat tLng que se encuentran invisibles
+     * para el usuario ya que no es necesario mostrarlas en el menú incial constantemente
+     */
     @BindView(R.id.btnReportar)
     ImageButton continuar;
     @BindView(R.id.textViewDireccion)
@@ -123,36 +145,33 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_Map)
     ImageButton btn_Map;
 
-    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-    public static final String campoVacio = "campoVacio";
-    public static final AtomicInteger count = new AtomicInteger(1);
-    public static final AtomicInteger count_01 = new AtomicInteger(1);
-    public DatabaseReference mDatabase;
-    public FirebaseAuth mFirebaseAuth;
-    public FirebaseAuth.AuthStateListener mAuthStateListener;
-    boolean cliked = false;
-    AlertDialog alert = null;
+    FirebaseFirestore mFirestore = FirebaseFirestore.getInstance(); //Bd donde se almacenan los reportes de cada usuario
+    public static final String campoVacio = "campoVacio"; //Se creó esta variable en caso que el GPS no encuentre dirección válida
+    public static final AtomicInteger count = new AtomicInteger(1); //Variable tipo entera incrementable para FirebaseFirestore
+    public static final AtomicInteger count_01 = new AtomicInteger(1); //Variable tipo entera incrementable para DatabaseRealtime
+    public DatabaseReference mDatabase; //BD donde se almacenan las coordenadas de cada reporte
+    public FirebaseAuth mFirebaseAuth; //Instancia FirebaseAuth
+    public FirebaseAuth.AuthStateListener mAuthStateListener; //Instancia AuthStateListener escucha los cambios de estado de inicio de sesión
 
+    AlertDialog alert = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Metodo para bloquear la rotación de pantalla
 
         mFirebaseAuth = FirebaseAuth.getInstance(); //Instancia FirebaseAuth
         ButterKnife.bind(this); //Instancia Butterknife
-        tDireccion.setText(campoVacio);/////////////////////////////////////////////////////////////////////////////////////////////////////////
+        tDireccion.setText(campoVacio); // Setear la variable tDirección evita el error de enviar lso datos vacios la direccion no puede ser null
         detectarConx(); // Switch para utilizar ultima direccion
-        persistenciaDatos(); // Metodo persistencia de datos
-        mDatabase= FirebaseDatabase.getInstance().getReference().child("Users/");
-        detectarGPSActivo(); //Detecta GPS Activo
-        localizacion(); //Solicita permisos COARSE & FINE LOCATION
-        registrarLocalizacion(); //Obtiene coordenadas y convierte en direccion los datos
-        //Fabric.with(this, new Crashlytics());
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+        persistenciaDatos(); // Metodo persistencia de datos que provee Firebae
+        mDatabase= FirebaseDatabase.getInstance().getReference().child("Users/"); //Instancia BD donde se almacenan las coordenadas de cada reporte
+        detectarGPSActivo(); //Detecta GPS Activo por medio
+        localizacion(); //Solicita permisos COARSE & FINE LOCATION para obtener ubicación precisa
+        registrarLocalizacion(); //Obtiene coordenadas y convierte en AddressLine los datos
+        //Fabric.with(this, new Crashlytics()); //metodo de crashlytics envia datos en tiempo real a Firebase para detectar posibles fallos
+        mAuthStateListener = new FirebaseAuth.AuthStateListener() { //Este metodo identifica el estado de Autenticación
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -202,16 +221,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //detectarConx();
-        continuar.setOnClickListener(new View.OnClickListener() {
+        continuar.setOnClickListener(new View.OnClickListener() { //Metodo para enviar reportes de avistamientos por medio del boton en pantalla
             @Override
             public void onClick(View v) {
                 enviarReporte();
             }
         });
-
     }
 
-
+/**
+ * El metodo dispatchKeyEvent se encarga de escuchar si
+ * se presiona el boton central del auricular
+ * que se encuentre conectado en el puerto 3.5mm
+ */
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         int action ,keycode;
@@ -276,9 +298,12 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
 
     }
+
+    /**
+     * Enviar reporte.
+     */
     public void enviarReporte() {
         //continuar.setBackgroundResource(R.drawable.reportar_inactivo);
-        cliked = true;
         //alertaEspecie();
         Locale locale = Locale.getDefault();
         Calendar today = Calendar.getInstance();
@@ -588,7 +613,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-/*
+
+    /**
+     * Se comentó este metodo porque no es necesario
+     * mostrar datos personales en la pantalla del usuario
+     */
+    /*
     @OnClick(R.id.imgPhotoProfile)
     public void selectPhoto() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
