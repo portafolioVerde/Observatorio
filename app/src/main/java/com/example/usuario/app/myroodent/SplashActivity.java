@@ -32,21 +32,27 @@ import butterknife.Optional;
  */
 public class SplashActivity extends AppCompatActivity {
 
-    @BindView(R.id.tDireccion) TextView tDireccion;
-    @BindView(R.id.tvLat) TextView tLat;
-    @BindView(R.id.tvLon) TextView tLng;
-    LocationManager locationManager;
+    TextView tDireccion,tLat,tLng;
+    //@BindView(R.id.tDireccion) TextView tDireccion;
+    //@BindView(R.id.tvLat) TextView tLat;
+    //@BindView(R.id.tvLon) TextView tLng;
     public SharedPreferences sharedPref;
     public LocationManager ubicacion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Este metodo bloquea la rotación de la pantalla
+
+        tDireccion = findViewById(R.id.tDireccion);
+        tLat = findViewById(R.id.tvLat);
+        tLng = findViewById(R.id.tvLon);
+
         checkLocationPermission(); //Chekea si se encuentran activos los permisos de localización
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this); //Referencia de la libreria ButterKnife
+
+        //ButterKnife.bind(this); //Referencia de la libreria ButterKnife
         localizacion();
         registrarLocalizacion(); //Obtiene coordenadas y convierte en direccion los datos
 

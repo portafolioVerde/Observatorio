@@ -52,6 +52,7 @@ public class EspeciesActivity extends RegistrosActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_especies);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Función que se encarga de bloquear la rotación de pantalla
+
         btn_regresar_home_x = findViewById(R.id.btn_regresar_home_x);
         btn_regresar_map_x = findViewById(R.id.btn_regresar_map_x);
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()

@@ -75,11 +75,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
          * un idioma este metodo funciona en algunas versiones de
          * Android unicamente.
          */
-        Locale locale = new Locale("es_419");
+        /*Locale locale = new Locale("es_419");
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
-        this.getApplicationContext().getResources().updateConfiguration(config, null);
+        this.getApplicationContext().getResources().updateConfiguration(config, null);*/
 
         // Obtenga SupportMapFragment y reciba una notificación cuando el mapa esté listo para ser utilizado.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

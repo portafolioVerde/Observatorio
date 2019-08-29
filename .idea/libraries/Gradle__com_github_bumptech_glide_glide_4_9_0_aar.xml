@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.bumptech.glide:glide:4.9.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/71df1f07e057e91e663600bbe584cb39/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/71df1f07e057e91e663600bbe584cb39/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ce241a4890e53d38fe15690e61c52cb9/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ce241a4890e53d38fe15690e61c52cb9/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

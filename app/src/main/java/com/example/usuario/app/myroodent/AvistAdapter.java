@@ -14,7 +14,7 @@ import java.util.List;
  * Se usa en este caso como puente que obtiene los datos de la clase ReporteEspecie.java
  * Y se encarga ademas de crear las vistas para esa clase
  */
-public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
+public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder> {
 
     private int LEFT_CELL = 1;
     private int RIGHT_CELL = 0;
@@ -127,41 +127,20 @@ public class AvistAdapter extends RecyclerView.Adapter<AvistAdapter.ViewHolder>{
         return reporteEspecie.size();
     }
 
-    /**
-     * The type View holder.
-     */
     public class ViewHolder extends RecyclerView.ViewHolder{
-        /**
-         * The M view.
-         */
+
         View mView;
 
-        /**
-         * The Txt titulo.
-         */
         public TextView TxtTitulo;
-        /**
-         * The Txt detalle.
-         */
+
         public TextView TxtDetalle;
-        /**
-         * The Txt detalle 2.
-         */
+
         public TextView TxtDetalle2;
-        /**
-         * The Txt detalle 3.
-         */
+
         public TextView TxtDetalle3;
-        /**
-         * The Img photo.
-         */
+
         public ImageView ImgPhoto;
 
-        /**
-         * Instantiates a new View holder.
-         *
-         * @param itemView the item view
-         */
         public ViewHolder(View itemView) {
 
             super(itemView);

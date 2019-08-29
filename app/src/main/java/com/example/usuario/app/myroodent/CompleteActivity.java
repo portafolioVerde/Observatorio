@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
  * información registrada también a la clase RegistradoActivity.java
  *
  */
-public class CompleteActivity extends AppCompatActivity {
+public class CompleteActivity extends AppCompatActivity implements  View.OnClickListener{
 /**
  * mFirebasAuth es el metodo que proporciona la autenticación
  * basada en correo electronico y contraseña
@@ -61,65 +61,79 @@ private static final String OTRO = "Desconocida";
  */
 
 FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-@BindView(R.id.tvDireccion) TextView tvDireccion;
-@BindView(R.id.tvEspecie) TextView tvEspecie;
-@BindView(R.id.tvFecha) TextView tvFecha;
-@BindView(R.id.tvHora) TextView tvHora;
-@BindView(R.id.tvMensaje) TextView tvMensaje;
-@BindView(R.id.btnDos) ImageView btnDos;
-@BindView(R.id.btnTres) ImageView btnTres;
-@BindView(R.id.btnCuatro) ImageView btnCuatro;
-@BindView(R.id.btnCinco) ImageView btnCinco;
-@BindView(R.id.btnSeis) ImageView btnSeis;
-@BindView(R.id.btnSiete) ImageView btnSiete;
-@BindView(R.id.btnOcho) ImageView btnOcho;
-@BindView(R.id.btn_ir_menu) Button btn_ir_menu;
-@BindView(R.id.btn_ir_lista) Button btn_ir_lista;
-
+//@BindView(R.id.tvDireccion) TextView tvDireccion;
+//@BindView(R.id.tvEspecie) TextView tvEspecie;
+//@BindView(R.id.tvFecha) TextView tvFecha;
+//@BindView(R.id.tvHora) TextView tvHora;
+//@BindView(R.id.tvMensaje) TextView tvMensaje;
+//@BindView(R.id.btnDos) ImageView btnDos;
+//@BindView(R.id.btnTres) ImageView btnTres;
+//@BindView(R.id.btnCuatro) ImageView btnCuatro;
+//@BindView(R.id.btnCinco) ImageView btnCinco;
+////@BindView(R.id.btnSeis) ImageView btnSeis;
+//@BindView(R.id.btnSiete) ImageView btnSiete;
+//@BindView(R.id.btnOcho) ImageView btnOcho;
+//@BindView(R.id.btn_ir_menu) Button btn_ir_menu;
+//@BindView(R.id.btn_ir_lista) Button btn_ir_lista;
+TextView tvDireccion,tvEspecie,tvFecha,tvHora,tvMensaje;
+ImageView btnDos,btnTres,btnCuatro,btnCinco,btnSeis,btnSiete,btnOcho;
+Button btn_ir_menu,btn_ir_lista;
 /**
  * También se instancia la clase ReporteEspecie.java
  * para comunicarse con la información de cada usuario.
  */
-
 public List<ReporteEspecie> reportesEspecies;
-
 @Override
 protected void onCreate(Bundle savedInstanceState) {
 
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_complete);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    tvDireccion = findViewById(R.id.tvDireccion);
+    tvEspecie = findViewById(R.id.tvEspecie);
+    tvFecha = findViewById(R.id.tvFecha);
+    tvHora = findViewById(R.id.tvHora);
+    tvMensaje = findViewById(R.id.tvMensaje);
 
+    btnDos = findViewById(R.id.btnDos);
+    btnDos.setOnClickListener(this);
+    btnTres = findViewById(R.id.btnTres);
+    btnTres.setOnClickListener(this);
+    btnCuatro = findViewById(R.id.btnCuatro);
+    btnCuatro.setOnClickListener(this);
+    btnCinco = findViewById(R.id.btnCinco);
+    btnCinco.setOnClickListener(this);
+    btnSeis = findViewById(R.id.btnSeis);
+    btnSeis.setOnClickListener(this);
+    btnSiete = findViewById(R.id.btnSiete);
+    btnSiete.setOnClickListener(this);
+    btnOcho = findViewById(R.id.btnOcho);
+    btnOcho.setOnClickListener(this);
+    btn_ir_menu = findViewById(R.id.btn_ir_menu);
+    btn_ir_menu.setOnClickListener(this);
+    btn_ir_lista = findViewById(R.id.btn_ir_lista);
+    btn_ir_lista.setOnClickListener(this);
 
-    ButterKnife.bind(this);
-    FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
-            .setPersistenceEnabled(true)
-            .build();
-    mFirestore.setFirestoreSettings(settings);
+    //ButterKnife.bind(this);
+    persistenciaDatosFirebase();
 
     mFirebaseAuth = FirebaseAuth.getInstance();
     mFirestore = FirebaseFirestore.getInstance();
     reportesEspecies = new ArrayList<>();
-
     traerDoc();
-    btn_ir_lista.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent i = new Intent(getApplicationContext(),EspeciesActivity.class);
-            startActivity(i);
-        }
-    });
-    btn_ir_menu.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Intent i = new Intent(getApplicationContext(),MainActivity.class);
-            startActivity(i);
-        }
-    });
+
+    }
+
+    private void persistenciaDatosFirebase() {
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build();
+        mFirestore.setFirestoreSettings(settings);
     }
 
     public void traerDoc(){
-    String doc = getIntent().getStringExtra("doc");
+
+    final String doc = getIntent().getStringExtra("doc");
     mFirestore.collection("Data")
             .document(mFirebaseAuth.getCurrentUser().getDisplayName()).collection("Reportes")
             .whereEqualTo("doc",doc)
@@ -135,6 +149,11 @@ protected void onCreate(Bundle savedInstanceState) {
                             tvFecha.setText(document.get("fecha").toString());
                             tvHora.setText(document.get("hora").toString());
 
+                            final String obsusuario = mFirebaseAuth.getCurrentUser().getDisplayName();
+                            final String obstvEspecie = tvEspecie.getText().toString();
+                            final String obstvFecha = tvFecha.getText().toString();
+                            final String obstvHora = tvHora.getText().toString();
+                            final String obstvDireccion = tvDireccion.getText().toString();
                             if(tvEspecie.getText().equals(ANFIBIO)){
                                 btnSeis.setImageResource(R.drawable.sapo_activo);
                                 btnSeis.setOnClickListener(new View.OnClickListener() {
@@ -143,12 +162,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                         //btnSeis.setBackgroundResource(R.drawable.sapo_inactivo);
                                         Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                         intent.putExtra("doc",document.getId());
-                                        intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                        intent.putExtra("especie",tvEspecie.getText());
+                                        intent.putExtra("usuario",obsusuario);
+                                        intent.putExtra("especie",obstvEspecie);
                                         intent.putExtra("subEspecie","Sapo");
-                                        intent.putExtra("fecha",tvFecha.getText().toString());
-                                        intent.putExtra("hora",tvHora.getText().toString());
-                                        intent.putExtra("direccion",tvDireccion.getText());
+                                        intent.putExtra("fecha",obstvFecha);
+                                        intent.putExtra("hora",obstvHora);
+                                        intent.putExtra("direccion",obstvDireccion);
                                         startActivity(intent);
                                     }
                                 });
@@ -159,12 +178,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                         //btnOcho.setBackgroundResource(R.drawable.rana_inactivo);
                                         Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                         intent.putExtra("doc",document.getId());
-                                        intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                        intent.putExtra("especie",tvEspecie.getText());
+                                        intent.putExtra("usuario",obsusuario);
+                                        intent.putExtra("especie",obstvEspecie);
+                                        intent.putExtra("fecha",obstvFecha);
+                                        intent.putExtra("hora",obstvHora);
+                                        intent.putExtra("direccion",obstvDireccion);
                                         intent.putExtra("subEspecie","Rana");
-                                        intent.putExtra("fecha",tvFecha.getText().toString());
-                                        intent.putExtra("hora",tvHora.getText().toString());
-                                        intent.putExtra("direccion",tvDireccion.getText());
                                         startActivity(intent);
                                     }
                                 });
@@ -177,12 +196,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                             //btnSeis.setBackgroundResource(R.drawable.gallinazo_inactivo);
                                             Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                             intent.putExtra("doc",document.getId());
-                                            intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                            intent.putExtra("especie",tvEspecie.getText());
+                                            intent.putExtra("usuario",obsusuario);
+                                            intent.putExtra("especie",obstvEspecie);
+                                            intent.putExtra("fecha",obstvFecha);
+                                            intent.putExtra("hora",obstvHora);
+                                            intent.putExtra("direccion",obstvDireccion);
                                             intent.putExtra("subEspecie","Gallinazo");
-                                            intent.putExtra("fecha",tvFecha.getText().toString());
-                                            intent.putExtra("hora",tvHora.getText().toString());
-                                            intent.putExtra("direccion",tvDireccion.getText());
                                             startActivity(intent);
                                         }
                                     });
@@ -193,12 +212,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                             //btnOcho.setBackgroundResource(R.drawable.rapaces_inactivo);
                                             Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                             intent.putExtra("doc",document.getId());
-                                            intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                            intent.putExtra("especie",tvEspecie.getText());
+                                            intent.putExtra("usuario",obsusuario);
+                                            intent.putExtra("especie",obstvEspecie);
+                                            intent.putExtra("fecha",obstvFecha);
+                                            intent.putExtra("hora",obstvHora);
+                                            intent.putExtra("direccion",obstvDireccion);
                                             intent.putExtra("subEspecie","Rapaz");
-                                            intent.putExtra("fecha",tvFecha.getText().toString());
-                                            intent.putExtra("hora",tvHora.getText().toString());
-                                            intent.putExtra("direccion",tvDireccion.getText());
                                             startActivity(intent);
                                         }
                                     });
@@ -212,12 +231,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                 //btnSeis.setBackgroundResource(R.drawable.lagarto_inactivo);
                                                 Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                 intent.putExtra("doc",document.getId());
-                                                intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                intent.putExtra("especie",tvEspecie.getText());
+                                                intent.putExtra("usuario",obsusuario);
+                                                intent.putExtra("especie",obstvEspecie);
+                                                intent.putExtra("fecha",obstvFecha);
+                                                intent.putExtra("hora",obstvHora);
+                                                intent.putExtra("direccion",obstvDireccion);
                                                 intent.putExtra("subEspecie","Lagarto");
-                                                intent.putExtra("fecha",tvFecha.getText().toString());
-                                                intent.putExtra("hora",tvHora.getText().toString());
-                                                intent.putExtra("direccion",tvDireccion.getText());
                                                 startActivity(intent);
                                             }
                                         });
@@ -228,12 +247,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                 //btnSiete.setBackgroundResource(R.drawable.culebra2_inactivo);
                                                 Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                 intent.putExtra("doc",document.getId());
-                                                intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                intent.putExtra("especie",tvEspecie.getText());
+                                                intent.putExtra("usuario",obsusuario);
+                                                intent.putExtra("especie",obstvEspecie);
+                                                intent.putExtra("fecha",obstvFecha);
+                                                intent.putExtra("hora",obstvHora);
+                                                intent.putExtra("direccion",obstvDireccion);
                                                 intent.putExtra("subEspecie","Culebra");
-                                                intent.putExtra("fecha",tvFecha.getText().toString());
-                                                intent.putExtra("hora",tvHora.getText().toString());
-                                                intent.putExtra("direccion",tvDireccion.getText());
                                                 startActivity(intent);
                                             }
                                         });
@@ -244,12 +263,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                 //btnOcho.setBackgroundResource(R.drawable.rana_inactivo);
                                                 Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                 intent.putExtra("doc",document.getId());
-                                                intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                intent.putExtra("especie",tvEspecie.getText());
+                                                intent.putExtra("usuario",obsusuario);
+                                                intent.putExtra("especie",obstvEspecie);
+                                                intent.putExtra("fecha",obstvFecha);
+                                                intent.putExtra("hora",obstvHora);
+                                                intent.putExtra("direccion",obstvDireccion);
                                                 intent.putExtra("subEspecie","Tortuga");
-                                                intent.putExtra("fecha",tvFecha.getText().toString());
-                                                intent.putExtra("hora",tvHora.getText().toString());
-                                                intent.putExtra("direccion",tvDireccion.getText());
                                                 startActivity(intent);
                                             }
                                         });
@@ -263,12 +282,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                     //btnOcho.setBackgroundResource(R.drawable.roedores_inactivo);
                                                     Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                     intent.putExtra("doc",document.getId());
-                                                    intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                    intent.putExtra("especie",tvEspecie.getText());
+                                                    intent.putExtra("usuario",obsusuario);
+                                                    intent.putExtra("especie",obstvEspecie);
+                                                    intent.putExtra("fecha",obstvFecha);
+                                                    intent.putExtra("hora",obstvHora);
+                                                    intent.putExtra("direccion",obstvDireccion);
                                                     intent.putExtra("subEspecie","Roedor");
-                                                    intent.putExtra("fecha",tvFecha.getText().toString());
-                                                    intent.putExtra("hora",tvHora.getText().toString());
-                                                    intent.putExtra("direccion",tvDireccion.getText());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -279,12 +298,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                     //btnDos.setBackgroundResource(R.drawable.felino_inactivo);
                                                     Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                     intent.putExtra("doc",document.getId());
-                                                    intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                    intent.putExtra("especie",tvEspecie.getText());
+                                                    intent.putExtra("usuario",obsusuario);
+                                                    intent.putExtra("especie",obstvEspecie);
+                                                    intent.putExtra("fecha",obstvFecha);
+                                                    intent.putExtra("hora",obstvHora);
+                                                    intent.putExtra("direccion",obstvDireccion);
                                                     intent.putExtra("subEspecie","Felino");
-                                                    intent.putExtra("fecha",tvFecha.getText().toString());
-                                                    intent.putExtra("hora",tvHora.getText().toString());
-                                                    intent.putExtra("direccion",tvDireccion.getText());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -295,12 +314,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                     //btnTres.setBackgroundResource(R.drawable.primate_inactivo);
                                                     Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                     intent.putExtra("doc",document.getId());
-                                                    intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                    intent.putExtra("especie",tvEspecie.getText());
+                                                    intent.putExtra("usuario",obsusuario);
+                                                    intent.putExtra("especie",obstvEspecie);
+                                                    intent.putExtra("fecha",obstvFecha);
+                                                    intent.putExtra("hora",obstvHora);
+                                                    intent.putExtra("direccion",obstvDireccion);
                                                     intent.putExtra("subEspecie","Primate");
-                                                    intent.putExtra("fecha",tvFecha.getText().toString());
-                                                    intent.putExtra("hora",tvHora.getText().toString());
-                                                    intent.putExtra("direccion",tvDireccion.getText());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -311,12 +330,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                     //btnCuatro.setBackgroundResource(R.drawable.comadreja_inactivo);
                                                     Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                     intent.putExtra("doc",document.getId());
-                                                    intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                    intent.putExtra("especie",tvEspecie.getText());
+                                                    intent.putExtra("usuario",obsusuario);
+                                                    intent.putExtra("especie",obstvEspecie);
+                                                    intent.putExtra("fecha",obstvFecha);
+                                                    intent.putExtra("hora",obstvHora);
+                                                    intent.putExtra("direccion",obstvDireccion);
                                                     intent.putExtra("subEspecie","Comadreja");
-                                                    intent.putExtra("fecha",tvFecha.getText().toString());
-                                                    intent.putExtra("hora",tvHora.getText().toString());
-                                                    intent.putExtra("direccion",tvDireccion.getText());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -327,12 +346,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                     //btnCinco.setBackgroundResource(R.drawable.zariguella_inactivo);
                                                     Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                     intent.putExtra("doc",document.getId());
-                                                    intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                    intent.putExtra("especie",tvEspecie.getText());
+                                                    intent.putExtra("usuario",obsusuario);
+                                                    intent.putExtra("especie",obstvEspecie);
+                                                    intent.putExtra("fecha",obstvFecha);
+                                                    intent.putExtra("hora",obstvHora);
+                                                    intent.putExtra("direccion",obstvDireccion);
                                                     intent.putExtra("subEspecie","Zariguella");
-                                                    intent.putExtra("fecha",tvFecha.getText().toString());
-                                                    intent.putExtra("hora",tvHora.getText().toString());
-                                                    intent.putExtra("direccion",tvDireccion.getText());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -343,12 +362,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                     //btnSeis.setBackgroundResource(R.drawable.zorro_inactivo);
                                                     Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                     intent.putExtra("doc",document.getId());
-                                                    intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                    intent.putExtra("especie",tvEspecie.getText());
+                                                    intent.putExtra("usuario",obsusuario);
+                                                    intent.putExtra("especie",obstvEspecie);
+                                                    intent.putExtra("fecha",obstvFecha);
+                                                    intent.putExtra("hora",obstvHora);
+                                                    intent.putExtra("direccion",obstvDireccion);
                                                     intent.putExtra("subEspecie","Zorro");
-                                                    intent.putExtra("fecha",tvFecha.getText().toString());
-                                                    intent.putExtra("hora",tvHora.getText().toString());
-                                                    intent.putExtra("direccion",tvDireccion.getText());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -359,12 +378,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                     //btnSiete.setBackgroundResource(R.drawable.oso_inactivo);
                                                     Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                     intent.putExtra("doc",document.getId());
-                                                    intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                    intent.putExtra("especie",tvEspecie.getText());
+                                                    intent.putExtra("usuario",obsusuario);
+                                                    intent.putExtra("especie",obstvEspecie);
+                                                    intent.putExtra("fecha",obstvFecha);
+                                                    intent.putExtra("hora",obstvHora);
+                                                    intent.putExtra("direccion",obstvDireccion);
                                                     intent.putExtra("subEspecie","Oso");
-                                                    intent.putExtra("fecha",tvFecha.getText().toString());
-                                                    intent.putExtra("hora",tvHora.getText().toString());
-                                                    intent.putExtra("direccion",tvDireccion.getText());
                                                     startActivity(intent);
                                                 }
                                             });
@@ -377,12 +396,12 @@ protected void onCreate(Bundle savedInstanceState) {
                                                     public void onClick(View v) {
                                                         Intent intent = new Intent(getApplicationContext(),RegistradoActivity.class);
                                                         intent.putExtra("doc",document.getId());
-                                                        intent.putExtra("usuario",mFirebaseAuth.getCurrentUser().getDisplayName());
-                                                        intent.putExtra("especie",tvEspecie.getText());
+                                                        intent.putExtra("usuario",obsusuario);
+                                                        intent.putExtra("especie",obstvEspecie);
+                                                        intent.putExtra("fecha",obstvFecha);
+                                                        intent.putExtra("hora",obstvHora);
+                                                        intent.putExtra("direccion",obstvDireccion);
                                                         intent.putExtra("subEspecie","Desconocida");
-                                                        intent.putExtra("fecha",tvFecha.getText().toString());
-                                                        intent.putExtra("hora",tvHora.getText().toString());
-                                                        intent.putExtra("direccion",tvDireccion.getText());
                                                         startActivity(intent);
                                                     }
                                                 });
@@ -395,5 +414,19 @@ protected void onCreate(Bundle savedInstanceState) {
                     }
                 }
             });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.btn_ir_lista:
+                Intent i1 = new Intent(getApplicationContext(),EspeciesActivity.class);
+                startActivity(i1);
+                break;
+            case R.id.btn_ir_menu:
+                Intent i2 = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i2);
+                break;
+        }
     }
 }

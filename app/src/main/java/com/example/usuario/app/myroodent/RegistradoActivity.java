@@ -28,65 +28,77 @@ import butterknife.ButterKnife;
  * mostrar y confirmar los datos que el usuario registró
  * anteriormente
  */
-public class RegistradoActivity extends AppCompatActivity {
-
+public class RegistradoActivity extends AppCompatActivity implements View.OnClickListener{
     /**
      * Instancias de las variables que se utilizaron para
      * obtener los datos registrados en la actividad anterior,
      * estos datos se envian a Firebase
      */
-
-    @BindView(R.id.tvNombre) TextView tvNombre;
-    @BindView(R.id.tvHora) TextView tvHora;
-    @BindView(R.id.tvFecha) TextView tvFecha;
-    @BindView(R.id.tvDireccionRegistrada) TextView tvDireccionRegistrada;
-    @BindView(R.id.tvSubEspecieRegistrada) TextView tvSubEspecieRegistrada;
-    @BindView(R.id.tvEspecieRegistrada) TextView tvEspecieRegistrada;
-    @BindView(R.id.regresardRegistros) Button regresardRegistros;
-    @BindView(R.id.regresar_Menu) Button regresar_Menu;
-
+    TextView tvNombre,tvHora,tvFecha,tvDireccionRegistrada,tvSubEspecieRegistrada,tvEspecieRegistrada;
+    Button regresardRegistros,regresar_Menu;
     /**
      * Se Instancia el metodo que se encarga de escuchar
      * el estado de autenticacion del usuario y posteriormente
      * se instancia la base de datos donde se guardan lso reportes
      * de cada avistamiento.
      */
-    public FirebaseAuth mFirebaseAuth;
-
-    private FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
-
+    FirebaseAuth mFirebaseAuth;
+    FirebaseFirestore mFirestore;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrado);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Metodo para bloquear la rotación de pantalla
 
-        ButterKnife.bind(this); //Libreria ButterKnife
-        /**
+        tvNombre = findViewById(R.id.tvNombre);
+        tvHora = findViewById(R.id.tvHora);
+        tvFecha = findViewById(R.id.tvFecha);
+        tvDireccionRegistrada = findViewById(R.id.tvDireccionRegistrada);
+        tvSubEspecieRegistrada = findViewById(R.id.tvSubEspecieRegistrada);
+        tvEspecieRegistrada = findViewById(R.id.tvEspecieRegistrada);
+
+        regresardRegistros = findViewById(R.id.regresardRegistros);
+        regresardRegistros.setOnClickListener(this);
+        regresar_Menu = findViewById(R.id.regresar_Menu);
+        regresar_Menu.setOnClickListener(this);
+
+        persistenciaDatos();
+        establecerIdioma();
+        traerDatos();
+    }
+
+    private void persistenciaDatos() {
+        /*
          * Persistencia de Datos de Firebase
          * Si se completaron registros y no habia conexion
          * a internet en el momento este metodo enviara los datos
          * posteriormente cuando exista una conexión estable a internet.
          */
+        //mFirebaseAuth = FirebaseAuth.getInstance();//Instanciar FirebaesAuth
+        mFirestore = FirebaseFirestore.getInstance();//Instanciar FireStore
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder() //Persistencia de Datos
                 .setPersistenceEnabled(true)
                 .build();
         mFirestore.setFirestoreSettings(settings);
+    }
 
+    private void establecerIdioma() {
         Locale locale = new Locale("es_419");//Metodo para establecer idioma en algunos dispositivos donde es necesario
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         this.getApplicationContext().getResources().updateConfiguration(config, null);
+    }
 
-        Bundle extras = getIntent().getExtras();//Traer datos con Bundle Extras
-        final String subEspecie = extras.getString("subEspecie"); //Subespecie que se seleccionó en CompleteActivity.java
-        final String data = extras.getString("doc"); //Id del docuemento donde se guardaron los datos de la ventana anterior
+    private void traerDatos() {
+        //Bundle extras = getIntent().getExtras();//Traer datos con Bundle Extras
+        //final String subEspecie = extras.getString("subEspecie"); //Subespecie que se seleccionó en CompleteActivity.java
+        //final String data = extras.getString("doc"); //Id del docuemento donde se guardaron los datos de la ventana anterior
 
+        final String data = getIntent().getExtras().getString("doc");
+        final String subEspecie = getIntent().getExtras().getString("subEspecie");
         mFirebaseAuth = FirebaseAuth.getInstance();//Instanciar FirebaesAuth
-
         mFirestore = FirebaseFirestore.getInstance();//Instanciar FireStore
-
         /**
          * Referenciar Documento donde se añadira campo SubEspecie
          */
@@ -99,7 +111,6 @@ public class RegistradoActivity extends AppCompatActivity {
          * y envia el dato SubEspecie seleccionado anteriormente
          */
         if(tvSubEspecieRegistrada!=null){
-
             ref.update("subEspecie",subEspecie)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -113,7 +124,6 @@ public class RegistradoActivity extends AppCompatActivity {
                             Log.w("Mensaje", "Intentelo Nuevamente...", e);
                         }
                     });
-
         }
         /**
          * Inicialmente se obtuvo el ID del documento que el usuario esta
@@ -126,14 +136,12 @@ public class RegistradoActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-
                         tvEspecieRegistrada.setText(document.get("especie").toString());
                         tvSubEspecieRegistrada.setText(document.get("subEspecie").toString());
                         tvFecha.setText(document.get("fecha").toString());
                         tvHora.setText(document.get("hora").toString());
                         tvDireccionRegistrada.setText(document.get("direccion").toString());
                         tvNombre.setText(mFirebaseAuth.getCurrentUser().getDisplayName());
-
                     } else {
                         Log.d("Mensaje", "No se encontró el reporte");
                     }
@@ -142,21 +150,24 @@ public class RegistradoActivity extends AppCompatActivity {
                 }
             }
         });
-
-        regresardRegistros.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),EspeciesActivity.class);
-                startActivity(intent);
-            }
-        });
-        regresar_Menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.regresar_Menu:
+                Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.regresardRegistros:
+                Intent intent2 = new Intent(getApplicationContext(),EspeciesActivity.class);
+                startActivity(intent2);
+                break;
+        }
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 }

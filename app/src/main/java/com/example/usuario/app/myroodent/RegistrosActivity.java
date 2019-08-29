@@ -74,6 +74,7 @@ public class RegistrosActivity extends AppCompatActivity {
                 //final String doc = getIntent().getStringExtra("dac");
                 btnAnfibio.setBackgroundResource(R.drawable.anfibio_inactivo);
                 String doc = getIntent().getExtras().getString("dac");// Se obtiene el IdDoc del itemList seleccionado
+
                 @Nullable
                 final DocumentReference ref = db.collection("Data")
                         .document(mFirebaseAuth.getCurrentUser().getDisplayName())
@@ -116,7 +117,8 @@ public class RegistrosActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnAve.setBackgroundResource(R.drawable.ave_inactivo);
                 //String doc = getIntent().getExtras().getString("dac");// Se obtiene el IdDoc del itemList seleccionado
-                String doc = getIntent().getStringExtra("dac");
+                //String doc = getIntent().getStringExtra("dac");
+                String doc = getIntent().getExtras().getString("dac");
                 @Nullable
                 final DocumentReference ref = db.collection("Data")
                         .document(mFirebaseAuth.getCurrentUser().getDisplayName())
@@ -159,7 +161,8 @@ public class RegistrosActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnMamifero.setBackgroundResource(R.drawable.mamifero_inactivo);
                 //String doc = getIntent().getExtras().getString("dac");// Se obtiene el IdDoc del itemList seleccionado
-                String doc = getIntent().getStringExtra("dac");
+                //String doc = getIntent().getStringExtra("dac");
+                String doc = getIntent().getExtras().getString("dac");
                 @Nullable
                 final DocumentReference ref = db.collection("Data")
                         .document(mFirebaseAuth.getCurrentUser().getDisplayName())
@@ -202,7 +205,8 @@ public class RegistrosActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnReptil.setBackgroundResource(R.drawable.reptil_inactivo);
                 //String doc = getIntent().getExtras().getString("dac");// Se obtiene el IdDoc del itemList seleccionado
-                String doc = getIntent().getStringExtra("dac");
+                //String doc = getIntent().getStringExtra("dac");
+                String doc = getIntent().getExtras().getString("dac");
                 @Nullable
                 final DocumentReference ref = db.collection("Data")
                         .document(mFirebaseAuth.getCurrentUser().getDisplayName())
@@ -244,7 +248,8 @@ public class RegistrosActivity extends AppCompatActivity {
             public void onClick(View v) {
                 btnDesc.setBackgroundResource(R.drawable.desconocido_inactivo);
                 //String doc = getIntent().getExtras().getString("dac");// Se obtiene el IdDoc del itemList seleccionado
-                String doc = getIntent().getStringExtra("dac");
+                //String doc = getIntent().getStringExtra("dac");
+                String doc = getIntent().getExtras().getString("dac");
                 @Nullable
                 final DocumentReference ref = db.collection("Data")
                         .document(mFirebaseAuth.getCurrentUser().getDisplayName())

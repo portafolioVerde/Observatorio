@@ -132,18 +132,15 @@ public class MainActivity extends AppCompatActivity {
      * Instancia de las varibles tDireccion tLat tLng que se encuentran invisibles
      * para el usuario ya que no es necesario mostrarlas en el menú incial constantemente
      */
-    @BindView(R.id.btnReportar)
-    ImageButton continuar;
-    @BindView(R.id.textViewDireccion)
-    TextView tDireccion;
-    @BindView(R.id.tvLat)
-    TextView tLat;
-    @BindView(R.id.tvLon)
-    TextView tLng;
-    @BindView(R.id.btn_Lista)
+    //@BindView(R.id.btnReportar) ImageButton continuar;
+    //@BindView(R.id.textViewDireccion) TextView tDireccion;
+    //@BindView(R.id.tvLat) TextView tLat;
+    //@BindView(R.id.tvLon)TextView tLng;
+    //@BindView(R.id.btn_Lista) Button btn_Lista;
+    //@BindView(R.id.btn_Map) ImageButton btn_Map;
+    ImageButton continuar,btn_Map;
+    TextView tDireccion,tLng,tLat;
     Button btn_Lista;
-    @BindView(R.id.btn_Map)
-    ImageButton btn_Map;
 
     FirebaseFirestore mFirestore = FirebaseFirestore.getInstance(); //Bd donde se almacenan los reportes de cada usuario
     public static final String campoVacio = "campoVacio"; //Se creó esta variable en caso que el GPS no encuentre dirección válida
@@ -161,8 +158,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Metodo para bloquear la rotación de pantalla
 
+        btn_Lista = findViewById(R.id.btn_Lista);
+        continuar = findViewById(R.id.btnReportar);
+        tDireccion = findViewById(R.id.textViewDireccion);
+        tLat = findViewById(R.id.tvLat);
+        tLng = findViewById(R.id.tvLon);
+        btn_Map = findViewById(R.id.btn_Map);
+
         mFirebaseAuth = FirebaseAuth.getInstance(); //Instancia FirebaseAuth
-        ButterKnife.bind(this); //Instancia Butterknife
+        //ButterKnife.bind(this); //Instancia Butterknife
         tDireccion.setText(campoVacio); // Setear la variable tDirección evita el error de enviar lso datos vacios la direccion no puede ser null
         detectarConx(); // Switch para utilizar ultima direccion
         persistenciaDatos(); // Metodo persistencia de datos que provee Firebae
@@ -228,8 +232,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-/**
+    /**
  * El metodo dispatchKeyEvent se encarga de escuchar si
  * se presiona el boton central del auricular
  * que se encuentre conectado en el puerto 3.5mm
@@ -328,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
         double longitu = Double.valueOf(""+tLng.getText().toString());
 
         UserInfo userInfo = new UserInfo(especieC,longitu,latitu);
-        mDatabase.child("Users/").child(mFirebaseAuth.getCurrentUser().getDisplayName()).child("/"+count_01.getAndIncrement()).setValue(userInfo);
+        mDatabase.child("Users/").child(mFirebaseAuth.getCurrentUser().getDisplayName()).push().setValue(userInfo);
 
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());
@@ -348,7 +351,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFirestore.collection("Data")
                 .document(mFirebaseAuth.getCurrentUser()
-                        .getDisplayName())
+                .getDisplayName())
                 .collection("Reportes")
                 .add(r)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -356,9 +359,11 @@ public class MainActivity extends AppCompatActivity {
                     public void onSuccess(DocumentReference documentReference) {
 
                         String docRef = documentReference.getId();//Envio del id del documento creado
+
                         Map<String, Object> e = new HashMap<>();
                         e.put("doc", docRef);
-                        mFirestore.collection("Data").document(mFirebaseAuth.getCurrentUser()
+                        mFirestore.collection("Data")
+                                .document(mFirebaseAuth.getCurrentUser()
                                 .getDisplayName())
                                 .collection("Reportes").document(docRef)
                                 .update(e);
@@ -387,7 +392,7 @@ public class MainActivity extends AppCompatActivity {
         //sonido notificacion////////////////////////////////////////////////////////////////////////////////////////////////////////
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Notification.Builder notificationBuilder = new Notification.Builder(getApplicationContext())
-                .setSmallIcon(R.drawable.ic_stat_name)
+                .setSmallIcon(R.mipmap.ic_launcher_app3)
                 .setContentTitle("Observatorio Móvil")
                 .setContentText("Tienes reportes por completar!! ")
                 .setAutoCancel(true)
@@ -599,6 +604,7 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
+
     }
 
     @Override
