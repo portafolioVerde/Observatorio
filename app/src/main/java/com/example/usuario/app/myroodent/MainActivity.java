@@ -329,9 +329,27 @@ public class MainActivity extends AppCompatActivity {
         }
         double latitu = Double.valueOf(""+tLat.getText().toString());
         double longitu = Double.valueOf(""+tLng.getText().toString());
+        Map<String, Object> register = new HashMap<>();
+        register.put("latitude",tLat.getText().toString() );
+        register.put("longitude", tLng.getText().toString());
+        register.put("id", count.getAndIncrement());
+        register.put("nombre", mFirebaseAuth.getCurrentUser().getDisplayName());
+        register.put("email", mFirebaseAuth.getCurrentUser().getEmail());
+        register.put("direccion", tDireccion.getText());
+        //r.put("latitud", ""+tLat.getText().toString());
+        //r.put("longitud", ""+tLng.getText().toString());
+
+        //r.put("lat",  tLat.getText());
+        register.put("hora",  today.get(Calendar.HOUR) + ":" + today.get(Calendar.MINUTE) + " " + today.getDisplayName(Calendar.AM_PM, Calendar.LONG,
+                locale));
+        register.put("especie", "");
+        register.put("subEspecie", "");
+        register.put("fecha", today.get(Calendar.DAY_OF_MONTH) + " de " + today.getDisplayName(Calendar.MONTH, Calendar.SHORT,
+                locale) + " de " + today.get(Calendar.YEAR));
+
 
         UserInfo userInfo = new UserInfo(especieC,longitu,latitu);
-        mDatabase.child("Users/").child(mFirebaseAuth.getCurrentUser().getDisplayName()).push().setValue(userInfo);
+        mDatabase.child("Users/").child(mFirebaseAuth.getCurrentUser().getDisplayName()).push().setValue(register);
 
         Map<String, Object> r = new HashMap<>();
         r.put("id", count.getAndIncrement());

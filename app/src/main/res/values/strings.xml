@@ -49,4 +49,5 @@
     <string name="hora">Hora:</string>
     <string name="completar">Completar Registros</string>
     <string name="completa_tus_reportes">Completa tus Reportes</string>
+    <string name="especie_title">Especie:</string>
 </resources>

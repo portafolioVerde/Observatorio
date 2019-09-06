@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondo_app_naranja_02"
     android:orientation="vertical"
     tools:context=".RegistradoActivity">
 
@@ -29,7 +29,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="Usuario"
         android:textColor="@color/material_green_500"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"
@@ -58,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="Especie: "
+        android:text="@string/especie_title"
         android:textColor="@color/material_green_700"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline20"
